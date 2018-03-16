@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>animate-css-grid example</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.css">
+  <link rel="stylesheet" href="index.css">
+
+</head>
+
+<body>
+  <div class="p-4">
+    <div class="mb-4">
+      <p>click a card to expand it</p>
+      <button class="btn js-toggle-grid">toggle grid size</button>
+      <button class="btn js-add-card">add a card</button>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <div>
+          <div class="card__avatar"></div>
+          <div class="card__title"></div>
+          <div class="card__description"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <div class="card__avatar"></div>
+          <div class="card__title"></div>
+          <div class="card__description"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <div class="card__avatar"></div>
+          <div class="card__title"></div>
+          <div class="card__description"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <div class="card__avatar"></div>
+          <div class="card__title"></div>
+          <div class="card__description"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <div class="card__avatar"></div>
+          <div class="card__title"></div>
+          <div class="card__description"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <div class="card__avatar"></div>
+          <div class="card__title"></div>
+          <div class="card__description"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <div class="card__avatar"></div>
+          <div class="card__title"></div>
+          <div class="card__description"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <div class="card__avatar"></div>
+          <div class="card__title"></div>
+          <div class="card__description"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <div class="card__avatar"></div>
+          <div class="card__title"></div>
+          <div class="card__description"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <div class="card__avatar"></div>
+          <div class="card__title"></div>
+          <div class="card__description"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <div class="card__avatar"></div>
+          <div class="card__title"></div>
+          <div class="card__description"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../src/index.js"></script>
+  <script>
+    const grid = document.querySelector(".grid");
+
+    document
+      .querySelector(".js-toggle-grid")
+      .addEventListener("click", () => grid.classList.toggle("grid--full"));
+
+    document
+      .querySelector(".js-add-card")
+      .addEventListener("click", () => {
+        grid.insertAdjacentHTML('afterbegin',
+          `
+          <div class="card">
+          <div>
+            <div class="card__avatar"></div>
+            <div class="card__title"></div>
+            <div class="card__description"></div>
+          </div>
+        </div>
+        `
+        )
+      });
+
+    grid.addEventListener('click', (ev) => {
+      let target = ev.target
+      while (target.tagName !== 'HTML') {
+        if (target.classList.contains('card')) {
+          target.classList.toggle('card--expanded')
+          return
+        }
+        target = target.parentElement
+      }
+    })
+
+    const {
+      stopAnimating
+    } = animateMutations(grid, {
+      stagger: true,
+      duration: 300
+    });
+  </script>
+
+</body>
+
+</html>

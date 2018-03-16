@@ -1,0 +1,96 @@
+/* layout */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    grid-template-rows: minmax(15rem, 1fr);
+    grid-auto-rows: 1fr;
+    grid-gap: 1rem;
+    grid-auto-flow: dense;
+}
+
+.grid--full {
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    grid-template-rows: minmax(9rem, 1fr);
+}
+
+/* styling */
+
+.card--expanded {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.card {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.card>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card__avatar {
+    height: 6rem;
+    width: 6rem;
+    border-radius: 100%;
+    background-color: hsla(0, 0%, 0%, 0.2);
+    margin-bottom: 1rem;
+}
+
+.card__title {
+    height: 1rem;
+    width: 7rem;
+    background-color: hsla(0, 0%, 0%, 0.6);
+    margin-bottom: 1rem;
+}
+
+.card__description {
+    height: 2rem;
+    width: 11rem;
+    background-color: hsla(0, 0%, 0%, 0.2);
+}
+
+.card:nth-of-type(1n) {
+    background-color: #366f6e;
+}
+
+.card:nth-of-type(2n) {
+    background-color: #79ac91;
+}
+
+.card:nth-of-type(7n) {
+    background-color: #e2b060;
+}
+
+.card:nth-of-type(4n) {
+    background-color: #e86448;
+}
+
+.card:nth-of-type(6n) {
+    background-color: #dc5263;
+}
+
+body {
+    background-color: #191919;
+    color: lightgray;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.p-4 {
+    padding: 1rem;
+}
+
+button {
+    padding: .5rem;
+}
