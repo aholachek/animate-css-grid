@@ -1,6 +1,8 @@
 # Animate CSS Grid
 
-This small script wraps a CSS grid (or really, any container element) and animates updates to its children.
+![demo of animate-css-grid in action](./demo/grid.gif)
+
+This small (1.6kb minified and gzipped) script wraps a CSS grid (or really, any container element) and animates updates to its children.
 When the grid container, or one of its immediate children, is updated via the addition or removal of a class, the grid will smoothly transition its children to their new positions and sizes.
 
 [Example on Codepen](https://codepen.io/aholachek/pen/VXjOPB)
