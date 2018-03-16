@@ -1,6 +1,6 @@
 module.exports = {
   output: {
-    library: 'animate-css-grid',
+    library: 'animateCSSGrid',
     libraryTarget: 'umd'
   },
   module: {

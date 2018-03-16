@@ -81,6 +81,7 @@ body {
     background-color: #191919;
     color: lightgray;
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+    min-height: 200vh;
 }
 
 .mb-4 {

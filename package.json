@@ -4,6 +4,7 @@
   "description": "",
   "main": "dist/main.js",
   "scripts": {
+    "prepublish": "yarn run build",
     "build": "webpack --mode production",
     "demo": "./node_modules/.bin/http-server"
   },

@@ -1,5 +1,5 @@
 // return a function that take a reference to a grid dom node and optional config
-animateMutations = (container, { duration = 300, stagger }) => {
+export const wrapGrid = (container, { duration = 300, stagger }) => {
   // initially and after every transition, record element positions
   const recordPositions = elements => {
     [...elements].forEach(el => {
@@ -32,10 +32,10 @@ animateMutations = (container, { duration = 300, stagger }) => {
       }))
       .filter(({ el, boundingClientRect }) => {
         if (
-          boundingClientRect.top !== parseInt(el.dataset.cachedTop) ||
-          boundingClientRect.left !== parseInt(el.dataset.cachedLeft) ||
-          boundingClientRect.width !== parseInt(el.dataset.cachedWidth) ||
-          boundingClientRect.height !== parseInt(el.dataset.cachedHeight)
+          boundingClientRect.top !== parseFloat(el.dataset.cachedTop) ||
+          boundingClientRect.left !== parseFloat(el.dataset.cachedLeft) ||
+          boundingClientRect.width !== parseFloat(el.dataset.cachedWidth) ||
+          boundingClientRect.height !== parseFloat(el.dataset.cachedHeight)
         ) {
           return true;
         }
@@ -90,5 +90,5 @@ animateMutations = (container, { duration = 300, stagger }) => {
     attributes: true,
     subtree: true,
   });
-  return { stopGridAnimations: observer.disconnect };
+  return { unwrapGrid: observer.disconnect };
 };

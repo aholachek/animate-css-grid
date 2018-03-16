@@ -99,7 +99,7 @@
       </div>
     </div>
   </div>
-  <script src="../src/index.js"></script>
+  <script src="../dist/main.js"></script>
   <script>
     const grid = document.querySelector(".grid");
 
@@ -135,8 +135,8 @@
     })
 
     const {
-      stopAnimating
-    } = animateMutations(grid, {
+      unwrapGrid
+    } = animateCSSGrid.wrapGrid(grid, {
       stagger: true
     });
   </script>
