@@ -72,10 +72,10 @@ export const wrapGrid = (
 
         const coords = {};
 
-        coords.scaleX = parseInt(cachedWidth) / width;
-        coords.scaleY = parseInt(cachedHeight) / height;
-        coords.translateX = parseInt(cachedLeft) - left;
-        coords.translateY = parseInt(cachedTop) - top;
+        coords.scaleX = parseFloat(cachedWidth) / width;
+        coords.scaleY = parseFloat(cachedHeight) / height;
+        coords.translateX = parseFloat(cachedLeft) - left;
+        coords.translateY = parseFloat(cachedTop) - top;
 
         el.style.transform = `translate(${coords.translateX}px, ${
           coords.translateY

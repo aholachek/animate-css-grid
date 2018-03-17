@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/main.js",
   "scripts": {
-    "prepublish": "yarn run build",
+    "prepublishOnly": "yarn run build",
     "build": "webpack --mode production",
     "dev": "./node_modules/.bin/webpack-dev-server --mode development --config demo/webpack.config.js"
   },
