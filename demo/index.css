@@ -96,3 +96,50 @@ body {
 button {
   padding: 0.5rem;
 }
+
+/* for the accordion */
+
+.subjects {
+  margin-top: 5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+  height: 100vh;
+}
+
+.subject {
+  padding: 2rem;
+  overflow: hidden;
+  color: #191919;
+}
+
+.subject__content {
+  display: none;
+}
+
+.subject:first-of-type {
+  background-color: #366f6e;
+}
+
+.subject:nth-of-type(2) {
+  background-color: #79ac91;
+}
+
+.subject:nth-of-type(3) {
+  background-color: #e2b060;
+}
+
+.subject:nth-of-type(4) {
+  background-color: #e86448;
+}
+
+.subject:nth-of-type(5) {
+  background-color: #dc5263;
+}
+
+.subject--active {
+  grid-column-end: span 3;
+}
+
+.subject--active .subject__content {
+  display: block;
+}

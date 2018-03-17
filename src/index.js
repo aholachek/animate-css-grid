@@ -1,12 +1,20 @@
 import TWEEN from '@tweenjs/tween.js';
+import throttle from 'lodash.throttle';
+
+const getScrollAwareBoundingClientRect = el => {
+  const rect = el.getBoundingClientRect().toJSON();
+  rect.top += window.scrollY;
+  rect.left += window.scrollX;
+  return rect;
+};
 
 // return a function that take a reference to a grid dom node and optional config
-export const wrapGrid = (container, { duration = 300, stagger } = {}) => {
+export const wrapGrid = (container, { duration = 250, stagger, easing = 'Quadratic.InOut' } = {}) => {
   // initially and after every transition, record element positions
   const recordPositions = elements => {
     [...elements].forEach(el => {
       if (typeof el.getBoundingClientRect !== 'function') return;
-      const rect = el.getBoundingClientRect();
+      const rect = getScrollAwareBoundingClientRect(el);
       const data = ['top', 'left', 'width', 'height'];
       data.forEach(
         d => (el.dataset[`cached${d[0].toUpperCase()}${d.slice(1)}`] = rect[d])
@@ -15,6 +23,12 @@ export const wrapGrid = (container, { duration = 300, stagger } = {}) => {
   };
 
   recordPositions(container.children);
+
+  const throttledResizeListener = throttle(() => {
+    recordPositions(container.children);
+  }, 250);
+
+  window.addEventListener('resize', throttledResizeListener);
 
   const mutationCallback = mutationsList => {
     // some grid items might have been added or removed, if so, update cached positions
@@ -30,7 +44,7 @@ export const wrapGrid = (container, { duration = 300, stagger } = {}) => {
     [...container.children]
       .map(el => ({
         el,
-        boundingClientRect: el.getBoundingClientRect(),
+        boundingClientRect: getScrollAwareBoundingClientRect(el),
       }))
       .filter(({ el, boundingClientRect }) => {
         if (
@@ -43,7 +57,7 @@ export const wrapGrid = (container, { duration = 300, stagger } = {}) => {
         }
         return false;
       })
-      .forEach(({ el, boundingClientRect }, i, children) => {
+      .forEach(({ el, boundingClientRect }, i, gridItems) => {
         if ([...el.children].length > 1)
           throw new Error(
             'Make sure every grid item has a single container element surrounding its children'
@@ -68,7 +82,7 @@ export const wrapGrid = (container, { duration = 300, stagger } = {}) => {
 
         const tween = new TWEEN.Tween(coords)
           .to({ translateX: 0, translateY: 0, scaleX: 1, scaleY: 1 }, duration)
-          .easing(TWEEN.Easing.Quadratic.Out)
+          .easing(TWEEN.Easing[easing.split('.')[0]][easing.split('.')[1]])
           .onUpdate(function() {
             el.style.transform = `translate(${coords.translateX}px, ${
               coords.translateY
@@ -85,7 +99,7 @@ export const wrapGrid = (container, { duration = 300, stagger } = {}) => {
             }
           });
 
-        if (stagger) tween.delay(duration / children.length * i);
+        if (stagger) tween.delay(duration / gridItems.length * i);
 
         const animate = time => {
           if (!tween.isPlaying()) return;
@@ -104,5 +118,11 @@ export const wrapGrid = (container, { duration = 300, stagger } = {}) => {
     attributes: true,
     subtree: true,
   });
-  return { unwrapGrid: observer.disconnect };
+
+  const unwrapGrid = () => {
+    window.removeEventListener(null, throttledResizeListener);
+    observer.disconnect();
+  };
+
+  return { unwrapGrid };
 };

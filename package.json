@@ -6,7 +6,7 @@
   "scripts": {
     "prepublish": "yarn run build",
     "build": "webpack --mode production",
-    "demo": "./node_modules/.bin/http-server"
+    "dev": "./node_modules/.bin/webpack-dev-server --mode development --config demo/webpack.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,11 +14,12 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
-    "http-server": "^0.11.1",
     "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.12"
+    "webpack-cli": "^2.0.12",
+    "webpack-dev-server": "^3.1.1"
   },
   "dependencies": {
-    "@tweenjs/tween.js": "^17.2.0"
+    "@tweenjs/tween.js": "^17.2.0",
+    "lodash.throttle": "^4.1.1"
   }
 }

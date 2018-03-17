@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>animate-css-grid example</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.css">
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="./index.css">
 </head>
 
 <body>
@@ -16,6 +16,7 @@
       <p>click a card to expand it</p>
       <button class="btn js-toggle-grid">toggle grid size</button>
       <button class="btn js-add-card">add a card</button>
+      <button class="btn js-remove-listener">remove animations</button>
     </div>
 
     <div class="grid">
@@ -78,45 +79,68 @@
       </div>
     </div>
   </div>
-  <script src="../dist/main.js"></script>
-  <script>
-    const grid = document.querySelector(".grid");
-
-    document
-      .querySelector(".js-toggle-grid")
-      .addEventListener("click", () => grid.classList.toggle("grid--full"));
-
-    document
-      .querySelector(".js-add-card")
-      .addEventListener("click", () => {
-        const randomNumber = Math.floor(Math.random() * 5) + 1
-        grid.insertAdjacentHTML('beforeend',
-          `
-          <div class="card card--${randomNumber}">
-          <div>
-            <div class="card__avatar"></div>
-            <div class="card__title"></div>
-            <div class="card__description"></div>
+  <div class="p-4">
+    <div class="subjects">
+      <section class="subject subject--active">
+        <div>
+          <h2 class="subject__title">
+            Title One
+          </h2>
+          <div class="subject__content">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, sequi quas porro blanditiis distinctio consequatur minima
+            optio vero eaque autem. Odit enim totam rem officia quae iste placeat labore similique?
           </div>
         </div>
-        `
-        )
-      });
+      </section>
+      <section class="subject">
+        <div>
+          <h2 class="subject__title">
+            Title Two
+          </h2>
+          <div class="subject__content">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, sequi quas porro blanditiis distinctio consequatur minima
+            optio vero eaque autem. Odit enim totam rem officia quae iste placeat labore similique?
+          </div>
+        </div>
+      </section>
+      <section class="subject">
+        <div>
+          <h2 class="subject__title">
+            Title Three
+          </h2>
+          <div class="subject__content">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, sequi quas porro blanditiis distinctio consequatur minima
+            optio vero eaque autem. Odit enim totam rem officia quae iste placeat labore similique?
+          </div>
+        </div>
+      </section>
+      <section class="subject">
+        <div>
+          <h2 class="subject__title">
+            Title Four
+          </h2>
+          <div class="subject__content">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, sequi quas porro blanditiis distinctio consequatur minima
+            optio vero eaque autem. Odit enim totam rem officia quae iste placeat labore similique?
+          </div>
+        </div>
+      </section>
+      <section class="subject">
+        <div>
+          <h2 class="subject__title">
+            Title Five
+          </h2>
+          <div class="subject__content">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, sequi quas porro blanditiis distinctio consequatur minima
+            optio vero eaque autem. Odit enim totam rem officia quae iste placeat labore similique?
+          </div>
+        </div>
+      </section>
 
-    grid.addEventListener('click', (ev) => {
-      let target = ev.target
-      while (target.tagName !== 'HTML') {
-        if (target.classList.contains('card')) {
-          target.classList.toggle('card--expanded')
-          return
-        }
-        target = target.parentElement
-      }
-    })
-
-    const {
-      unwrapGrid
-    } = animateCSSGrid.wrapGrid(grid);
+    </div>
+  </div>
+  <script src="../bundle.js"></script>
+  <script>
   </script>
 
 </body>
