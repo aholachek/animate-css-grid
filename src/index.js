@@ -2,14 +2,18 @@ import TWEEN from '@tweenjs/tween.js';
 import throttle from 'lodash.throttle';
 
 const getScrollAwareBoundingClientRect = el => {
-  const rect = el.getBoundingClientRect().toJSON();
+  const { top, left, width, height } = el.getBoundingClientRect();
+  const rect = { top, left, width, height };
   rect.top += window.scrollY;
   rect.left += window.scrollX;
   return rect;
 };
 
 // return a function that take a reference to a grid dom node and optional config
-export const wrapGrid = (container, { duration = 250, stagger, easing = 'Quadratic.InOut' } = {}) => {
+export const wrapGrid = (
+  container,
+  { duration = 250, stagger, easing = 'Quadratic.InOut' } = {}
+) => {
   // initially and after every transition, record element positions
   const recordPositions = elements => {
     [...elements].forEach(el => {
