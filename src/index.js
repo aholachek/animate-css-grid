@@ -1,5 +1,7 @@
+import TWEEN from '@tweenjs/tween.js';
+
 // return a function that take a reference to a grid dom node and optional config
-export const wrapGrid = (container, { duration = 300, stagger }) => {
+export const wrapGrid = (container, { duration = 300, stagger } = {}) => {
   // initially and after every transition, record element positions
   const recordPositions = elements => {
     [...elements].forEach(el => {
@@ -42,45 +44,57 @@ export const wrapGrid = (container, { duration = 300, stagger }) => {
         return false;
       })
       .forEach(({ el, boundingClientRect }, i, children) => {
-        const { top, left, width, height } = boundingClientRect;
-        const { cachedTop, cachedLeft, cachedWidth, cachedHeight } = el.dataset;
-
-        const scaleX = parseInt(cachedWidth) / width;
-        const scaleY = parseInt(cachedHeight) / height;
-        const translateX = parseInt(cachedLeft) - left;
-        const translateY = parseInt(cachedTop) - top;
-        el.style.transition = '';
-        el.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-        el.style.transformOrigin = '0 0';
-
         if ([...el.children].length > 1)
           throw new Error(
             'Make sure every grid item has a single container element surrounding its children'
           );
 
-        if (el.children[0]) {
-          el.children[0].style.transition = '';
-          el.children[0].style.transform = `scale(${1 / scaleX},${1 / scaleY})`;
-        }
+        const { top, left, width, height } = boundingClientRect;
+        const { cachedTop, cachedLeft, cachedWidth, cachedHeight } = el.dataset;
 
-        const transitionElement = element => {
-          element.style.transition = `transform ${duration}ms ease-in-out`;
-          element.style.transform = '';
-        };
+        const coords = {};
 
-        const initiateAnimation = () => {
-          requestAnimationFrame(() => {
-            transitionElement(el);
-            el.children[0] && transitionElement(el.children[0]);
-            setTimeout(() => recordPositions(container.children), duration);
+        coords.scaleX = parseInt(cachedWidth) / width;
+        coords.scaleY = parseInt(cachedHeight) / height;
+        coords.translateX = parseInt(cachedLeft) - left;
+        coords.translateY = parseInt(cachedTop) - top;
+
+        el.style.transform = `translate(${coords.translateX}px, ${
+          coords.translateY
+        }px) scale(${coords.scaleX}, ${coords.scaleY})`;
+        el.style.transformOrigin = '0 0';
+        el.children[0].style.transform = `scale(${1 / coords.scaleX},${1 /
+          coords.scaleY})`;
+
+        const tween = new TWEEN.Tween(coords)
+          .to({ translateX: 0, translateY: 0, scaleX: 1, scaleY: 1 }, duration)
+          .easing(TWEEN.Easing.Quadratic.Out)
+          .onUpdate(function() {
+            el.style.transform = `translate(${coords.translateX}px, ${
+              coords.translateY
+            }px) scale(${coords.scaleX}, ${coords.scaleY})`;
+            el.children[0].style.transform = `scale(${1 / coords.scaleX},${1 /
+              coords.scaleY})`;
+            if (
+              coords.translateX === 0 &&
+              coords.translateY === 0 &&
+              coords.scaleX === 1 &&
+              coords.scaleY === 1
+            ) {
+              recordPositions([el]);
+            }
           });
+
+        if (stagger) tween.delay(duration / children.length * i);
+
+        const animate = time => {
+          if (!tween.isPlaying()) return;
+          requestAnimationFrame(animate);
+          TWEEN.update(time);
         };
 
-        if (stagger) {
-          setTimeout(initiateAnimation, duration / children.length * i);
-        } else {
-          initiateAnimation();
-        }
+        tween.start();
+        requestAnimationFrame(animate);
       });
   };
 

@@ -20,56 +20,56 @@
 
     <div class="grid">
 
-      <div class="card">
+      <div class="card card--1">
         <div>
           <div class="card__avatar"></div>
           <div class="card__title"></div>
           <div class="card__description"></div>
         </div>
       </div>
-      <div class="card">
+      <div class="card card--5">
         <div>
           <div class="card__avatar"></div>
           <div class="card__title"></div>
           <div class="card__description"></div>
         </div>
       </div>
-      <div class="card">
+      <div class="card card--2">
         <div>
           <div class="card__avatar"></div>
           <div class="card__title"></div>
           <div class="card__description"></div>
         </div>
       </div>
-      <div class="card">
+      <div class="card card--3">
         <div>
           <div class="card__avatar"></div>
           <div class="card__title"></div>
           <div class="card__description"></div>
         </div>
       </div>
-      <div class="card">
+      <div class="card card--2">
         <div>
           <div class="card__avatar"></div>
           <div class="card__title"></div>
           <div class="card__description"></div>
         </div>
       </div>
-      <div class="card">
+      <div class="card card--4">
         <div>
           <div class="card__avatar"></div>
           <div class="card__title"></div>
           <div class="card__description"></div>
         </div>
       </div>
-      <div class="card">
+      <div class="card card--3">
         <div>
           <div class="card__avatar"></div>
           <div class="card__title"></div>
           <div class="card__description"></div>
         </div>
       </div>
-      <div class="card">
+      <div class="card card--1">
         <div>
           <div class="card__avatar"></div>
           <div class="card__title"></div>
@@ -89,9 +89,10 @@
     document
       .querySelector(".js-add-card")
       .addEventListener("click", () => {
-        grid.insertAdjacentHTML('afterbegin',
+        const randomNumber = Math.floor(Math.random() * 5) + 1
+        grid.insertAdjacentHTML('beforeend',
           `
-          <div class="card">
+          <div class="card card--${randomNumber}">
           <div>
             <div class="card__avatar"></div>
             <div class="card__title"></div>

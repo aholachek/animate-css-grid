@@ -2,7 +2,7 @@
 
 ![demo of animate-css-grid in action](./demo/grid.gif)
 
-This small (1.6kb minified and gzipped) script wraps a CSS grid (or really, any container element) and animates updates to its children.
+This small (4kb minified and gzipped) script wraps a CSS grid (or really, any container element) and animates updates to its children.
 When the grid container, or one of its immediate children, is updated via the addition or removal of a class, the grid will smoothly transition its children to their new positions and sizes.
 
 [Example on Codepen](https://codepen.io/aholachek/pen/VXjOPB)
@@ -18,7 +18,9 @@ import { wrapGrid } from animateCSSGrid
 const grid = document.querySelector(".grid");
 
 const { unwrapGrid } = wrapGrid(grid, {
+  // create a stagger effect
   stagger: true,
+  // specify a duration (default is 300 ms)
   duration: 300
 });
 
@@ -32,10 +34,7 @@ Or from a script tag:
 
 <script>
   const grid = document.querySelector(".grid");
-  const { unwrapGrid } = animateCSSGrid.wrapGrid(grid, {
-    stagger: true,
-    duration: 300
-  });
+  const { unwrapGrid } = animateCSSGrid.wrapGrid(grid);
 </script>
 ```
 
@@ -54,12 +53,12 @@ OK:
 ```html
 <div class="some-grid-class-that-changes">
 
-<div class="grid-item">
-  <div>
-    ...child 1
-    ...child 2
+  <div class="grid-item">
+    <div>
+      ...child 1
+      ...child 2
+    </div>
   </div>
-</div>
 
 <div>
 ```
@@ -68,10 +67,10 @@ Not going to work:
 ```html
 <div style="[grid styles that change]">
 
-<div class="grid-item">
-    ...child 1
-    ...child 2
-</div>
+  <div class="grid-item">
+      ...child 1
+      ...child 2
+  </div>
 
 <div>
 ```

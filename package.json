@@ -17,5 +17,8 @@
     "http-server": "^0.11.1",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12"
+  },
+  "dependencies": {
+    "@tweenjs/tween.js": "^17.2.0"
   }
 }
