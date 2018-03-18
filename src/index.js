@@ -1,11 +1,11 @@
 import TWEEN from '@tweenjs/tween.js';
 import throttle from 'lodash.throttle';
 
-const getScrollAwareBoundingClientRect = el => {
+const getGridAwareBoundingClientRect = (gridBoundingClientRect, el) => {
   const { top, left, width, height } = el.getBoundingClientRect();
   const rect = { top, left, width, height };
-  rect.top += window.scrollY;
-  rect.left += window.scrollX;
+  rect.top -= gridBoundingClientRect.top;
+  rect.left -= gridBoundingClientRect.left;
   return rect;
 };
 
@@ -16,9 +16,10 @@ export const wrapGrid = (
 ) => {
   // initially and after every transition, record element positions
   const recordPositions = elements => {
+    const gridBoundingClientRect = container.getBoundingClientRect();
     [...elements].forEach(el => {
       if (typeof el.getBoundingClientRect !== 'function') return;
-      const rect = getScrollAwareBoundingClientRect(el);
+      const rect = getGridAwareBoundingClientRect(gridBoundingClientRect, el);
       const data = ['top', 'left', 'width', 'height'];
       data.forEach(
         d => (el.dataset[`cached${d[0].toUpperCase()}${d.slice(1)}`] = rect[d])
@@ -45,10 +46,16 @@ export const wrapGrid = (
     ).length;
 
     if (!relevantMutationHappened) return;
+
+    const gridBoundingClientRect = container.getBoundingClientRect();
+
     [...container.children]
       .map(el => ({
         el,
-        boundingClientRect: getScrollAwareBoundingClientRect(el),
+        boundingClientRect: getGridAwareBoundingClientRect(
+          gridBoundingClientRect,
+          el
+        ),
       }))
       .filter(({ el, boundingClientRect }) => {
         if (
@@ -115,8 +122,8 @@ export const wrapGrid = (
         requestAnimationFrame(animate);
       });
   };
-
-  const observer = new MutationObserver(mutationCallback);
+  const throttledMutationCallback = throttle(mutationCallback, 100);
+  const observer = new MutationObserver(throttledMutationCallback);
   observer.observe(container, {
     childList: true,
     attributes: true,
