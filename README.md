@@ -3,15 +3,13 @@
 ![demo of animate-css-grid in action](./demo/grid.gif)
 
 This small script makes it super easy to make sure your CSS grid transitions gracefully from one state to another.
-When the grid container, or one of its immediate children, is updated via the addition or removal of a class, the grid will smoothly transition its children to their new positions and sizes.
+When the grid container, or one of its direct children, is updated via the addition or removal of a class, the grid will smoothly transition  to its new configuration.
 
 [Example on Codepen](https://codepen.io/aholachek/pen/VXjOPB)
 
 ## How to use it
 
-Just call the `wrapGrid` method on your grid container.
-
-The optional config object allows you to control duration, staggering, and easing.
+Just call the `wrapGrid` method on your grid container, and optionally provide a config object as a second argument.
 
 ES6 Module:
 
@@ -39,20 +37,19 @@ Or from a script tag:
 </script>
 ```
 
-[Available easing functions](https://sole.github.io/tween.js/examples/03_graphs.html).
-
-Example options object:
+Example optional config object:
 
 ```js
 {
-  // create a stagger effect (default is false)
+  // default is false
   stagger: true,
-  // specify a duration in ms (default is 250 ms)
+  // default is 250 ms
   duration: 500
-  // specify an easing as a string. default is 'Quadratic.InOut'
+  // default is 'Quadratic.InOut'
   easing: 'Sinusoidal.InOut'
 }
 ```
+[Available easing functions](https://sole.github.io/tween.js/examples/03_graphs.html).
 
 ## How it works
 
