@@ -158,4 +158,19 @@ button {
 
 .card__inner {
   background-color: hsla(0, 0%, 0%, 0.6);
+  /* transition: width 0.5s, height 0.5s; */
+}
+
+.card__inner--1 {
+  width: 50px;
+  height: 120px;
+}
+
+.card__inner--2 {
+  width: 130px;
+  height: 10px;
+}
+.card__inner--3 {
+  width: 220px;
+  height: 80px;
 }

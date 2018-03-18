@@ -69,15 +69,20 @@ subjects.addEventListener('click', ev => {
 
 // event handler to toggle card size on click
 const changeGrid = document.querySelector('.grid-children-change');
-setInterval(()=>{
-  [...changeGrid.querySelectorAll('.card')].forEach((el)=>{
-    const width = Math.random() * 400;
-      const height = Math.random() * 200;
-    el.innerHTML = `<div class="card__inner" style="width:${width}px; height:${height}px"></div>`
-  })
-}, 1000)
+const { unwrapChangeGrid, forceGridAnimation } = wrapGrid(changeGrid);
+ 
+const updateContents = () => {
+  [...changeGrid.querySelectorAll(".card")].forEach(el => {
+    const width = Math.random() * 300;
+    const height = Math.random() * 200;
+    const inner = el.querySelector('.card__inner')
+    inner.style.width = `${width}px`
+    inner.style.height = `${height}px`
+  });
+  forceGridAnimation()
+};
 
+setInterval(updateContents, 1000)
 
-const { unwrapChangeGrid } = wrapGrid(changeGrid);
 
 

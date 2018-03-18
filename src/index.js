@@ -36,15 +36,17 @@ export const wrapGrid = (
   window.addEventListener('resize', throttledResizeListener);
 
   const mutationCallback = mutationsList => {
-    // check if we care about the mutation
-    const relevantMutationHappened = mutationsList.filter(
-      m =>
-        m.attributeName === 'class' ||
-        m.addedNodes.length ||
-        m.removedNodes.length
-    ).length;
+    if (mutationsList !== 'forceGridAnimation') {
+      // check if we care about the mutation
+      const relevantMutationHappened = mutationsList.filter(
+        m =>
+          m.attributeName === 'class' ||
+          m.addedNodes.length ||
+          m.removedNodes.length
+      ).length;
 
-    if (!relevantMutationHappened) return;
+      if (!relevantMutationHappened) return;
+    }
 
     const gridBoundingClientRect = container.getBoundingClientRect();
 
@@ -142,5 +144,7 @@ export const wrapGrid = (
     observer.disconnect();
   };
 
-  return { unwrapGrid };
+  const forceGridAnimation = () => mutationCallback('forceGridAnimation');
+
+  return { unwrapGrid, forceGridAnimation };
 };

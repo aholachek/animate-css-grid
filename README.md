@@ -3,7 +3,7 @@
 ![demo of animate-css-grid in action](./demo/grid.gif)
 
 This small script makes it super easy to make sure your CSS grid transitions gracefully from one state to another.
-If the content of the grid changes, or if the grid or one of its children is updated with the addition or removal of a class, the grid will smoothly transition  to its new configuration.
+If the content of the grid changes, or if the grid or one of its children is updated with the addition or removal of a class, the grid will automatically transition  to its new configuration.
 
 [Examples on Codepen](https://codepen.io/collection/XGWeaG/)
 
@@ -20,10 +20,14 @@ import { wrapGrid } from animateCSSGrid
 
 const grid = document.querySelector(".grid");
 
-const { unwrapGrid } = wrapGrid(grid, {duration: 500});
+const { unwrapGrid, forceGridAnimation } = wrapGrid(grid, {duration: 500});
 
 // later, to remove transitions
 unwrapGrid()
+
+// later, if you are changing grid layout with inline styles and still want the grid to animate
+grid.style.width = '200px'
+forceGridAnimation()
 ```
 
 Or from a script tag:
