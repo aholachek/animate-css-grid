@@ -27,6 +27,7 @@
   justify-content: center;
   align-items: center;
   padding: 1rem;
+  overflow: hidden;
 }
 
 .card > div {
@@ -142,4 +143,19 @@ button {
 
 .subject--active .subject__content {
   display: block;
+}
+
+/* changes test */
+
+.grid-children-change {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(min-content, 200px));
+  grid-auto-rows: fit-content(600px);
+  grid-gap: 1rem;
+  grid-auto-flow: dense;
+  justify-content: center;
+}
+
+.card__inner {
+  background-color: hsla(0, 0%, 0%, 0.6);
 }

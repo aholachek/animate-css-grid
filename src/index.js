@@ -36,13 +36,12 @@ export const wrapGrid = (
   window.addEventListener('resize', throttledResizeListener);
 
   const mutationCallback = mutationsList => {
-    // some grid items might have been added or removed, if so, update cached positions
-    mutationsList.filter(m => m.type === 'childList').length &&
-      recordPositions(container.children);
-
-    // then, check if the grid or grid items have had classes added or removed
+    // check if we care about the mutation
     const relevantMutationHappened = mutationsList.filter(
-      m => m.attributeName === 'class'
+      m =>
+        m.attributeName === 'class' ||
+        m.addedNodes.length ||
+        m.removedNodes.length
     ).length;
 
     if (!relevantMutationHappened) return;
@@ -58,6 +57,13 @@ export const wrapGrid = (
         ),
       }))
       .filter(({ el, boundingClientRect }) => {
+        // don't animate the initial appearance of elements,
+        // just cache their position so they can be animated later
+        if (!el.dataset.cachedHeight && !el.dataset.cachedHeight) {
+          recordPositions([el]);
+          return false;
+        }
+        // check if this element actually needs to be animated or if it stayed the same
         if (
           boundingClientRect.top !== parseFloat(el.dataset.cachedTop) ||
           boundingClientRect.left !== parseFloat(el.dataset.cachedLeft) ||
@@ -128,10 +134,11 @@ export const wrapGrid = (
     childList: true,
     attributes: true,
     subtree: true,
+    attributeFilter: ['class'],
   });
 
   const unwrapGrid = () => {
-    window.removeEventListener(null, throttledResizeListener);
+    window.removeEventListener('resize', throttledResizeListener);
     observer.disconnect();
   };
 

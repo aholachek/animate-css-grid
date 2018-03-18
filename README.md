@@ -3,9 +3,9 @@
 ![demo of animate-css-grid in action](./demo/grid.gif)
 
 This small script makes it super easy to make sure your CSS grid transitions gracefully from one state to another.
-When the grid container, or one of its direct children, is updated via the addition or removal of a class, the grid will smoothly transition  to its new configuration.
+If the content of the grid changes, or if the grid or one of its children is updated with the addition or removal of a class, the grid will smoothly transition  to its new configuration.
 
-[Example on Codepen](https://codepen.io/aholachek/pen/VXjOPB)
+[Examples on Codepen](https://codepen.io/collection/XGWeaG/)
 
 ## How to use it
 
