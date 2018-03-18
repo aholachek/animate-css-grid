@@ -1,6 +1,6 @@
 {
   "name": "animate-css-grid",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "",
   "main": "dist/main.js",
   "scripts": {
