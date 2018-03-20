@@ -1,6 +1,6 @@
 {
   "name": "animate-css-grid",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Easy, smooth transitions for CSS grid",
   "homepage": "https://github.com/aholachek/animate-css-grid",
   "main": "dist/main.js",
