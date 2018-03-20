@@ -12,6 +12,7 @@ If the content of the grid changes, or if the grid or one of its children is upd
 ## How to use it
 
 Just call the `wrapGrid` method on your grid container, and optionally provide a config object as a second argument.
+If the grid is removed from the page, the animations will automatically be cleaned up as well.
 
 ES6 Module:
 
@@ -21,12 +22,7 @@ ES6 Module:
 import { wrapGrid } from animateCSSGrid
 
 const grid = document.querySelector(".grid");
-
-const { unwrapGrid, forceGridAnimation } = wrapGrid(grid, {duration: 500});
-
-// remove transitions
-unwrapGrid()
-
+wrapGrid(grid);
 ```
 
 Or from a script tag:
@@ -36,7 +32,7 @@ Or from a script tag:
 
 <script>
   const grid = document.querySelector(".grid");
-  animateCSSGrid.wrapGrid(grid, {stagger: true});
+  animateCSSGrid.wrapGrid(grid, {stagger: true, duration : 600});
 </script>
 ```
 
@@ -53,6 +49,25 @@ Optional config object:
 }
 ```
 [Available easing functions](https://sole.github.io/tween.js/examples/03_graphs.html).
+
+Two functions are returned by the `wrapGrid` call that you probably won't need to use:
+
+```js
+import { wrapGrid } from animateCSSGrid
+
+const grid = document.querySelector(".grid");
+const { unwrapGrid, forceGridAnimation } = wrapGrid(grid);
+
+// if you want the grid to transition after updating an inline style
+// you need to call forceGridAnimation
+grid.style.width = '500px'
+forceGridAnimation()
+
+// if you want to remove animations but not the grid itself
+unwrapGrid()
+
+```
+
 
 ## Requirements
 
@@ -79,4 +94,4 @@ Example:
 The script registers a `MutationObserver` that activates when the grid or one of its children adds or loses a class or element.
 It uses the FLIP animation technique to smoothly update the grid, applying a counter transform to the children of each item so that they do not appear distorted while the transition occurs.
 
-It should work on container elements without CSS grid applied as well, but  was developed with CSS grid in mind.
+It should work on container elements without CSS grid applied as well, but was developed with CSS grid in mind.
