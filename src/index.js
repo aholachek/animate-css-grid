@@ -9,6 +9,19 @@ const getGridAwareBoundingClientRect = (gridBoundingClientRect, el) => {
   return rect;
 };
 
+const rectInViewport = (rect, gridBoundingClientRect) => {
+  const left = rect.left;
+  const top = rect.top + gridBoundingClientRect.top;
+  const right = left + rect.width;
+  const bottom = top + rect.height;
+  return (
+    bottom > 0 &&
+    top < window.innerHeight &&
+    right > 0 &&
+    left < window.innerWidth
+  );
+};
+
 // return a function that take a reference to a grid dom node and optional config
 export const wrapGrid = (
   container,
@@ -59,22 +72,33 @@ export const wrapGrid = (
         ),
       }))
       .filter(({ el, boundingClientRect }) => {
+        const cachedRect = {
+          top: parseFloat(el.dataset.cachedTop),
+          left: parseFloat(el.dataset.cachedLeft),
+          width: parseFloat(el.dataset.cachedWidth),
+          height: parseFloat(el.dataset.cachedHeight),
+        };
         // don't animate the initial appearance of elements,
         // just cache their position so they can be animated later
-        if (!el.dataset.cachedHeight && !el.dataset.cachedHeight) {
+        if (!el.dataset.cachedHeight && !el.dataset.cachedWidth) {
           recordPositions([el]);
           return false;
-        }
-        // check if this element actually needs to be animated or if it stayed the same
-        if (
-          boundingClientRect.top !== parseFloat(el.dataset.cachedTop) ||
-          boundingClientRect.left !== parseFloat(el.dataset.cachedLeft) ||
-          boundingClientRect.width !== parseFloat(el.dataset.cachedWidth) ||
-          boundingClientRect.height !== parseFloat(el.dataset.cachedHeight)
+        } else if (
+          boundingClientRect.top === cachedRect.top &&
+          boundingClientRect.left === cachedRect.left &&
+          boundingClientRect.width === cachedRect.width &&
+          boundingClientRect.height === cachedRect.height
         ) {
-          return true;
+          // if it didn't change, dont animated it
+          return false;
+        } else if (
+          !rectInViewport(boundingClientRect, gridBoundingClientRect) &&
+          !rectInViewport(cachedRect, gridBoundingClientRect)
+        ) {
+          // if it's not in the viewport, dont animate it
+          return false;
         }
-        return false;
+        return true;
       })
       .forEach(({ el, boundingClientRect }, i, gridItems) => {
         if ([...el.children].length > 1)
@@ -114,7 +138,9 @@ export const wrapGrid = (
               coords.scaleX === 1 &&
               coords.scaleY === 1
             ) {
-              recordPositions([el]);
+              requestAnimationFrame(() => {
+                recordPositions([el]);
+              });
             }
           });
 

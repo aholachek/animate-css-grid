@@ -70,19 +70,48 @@ subjects.addEventListener('click', ev => {
 // event handler to toggle card size on click
 const changeGrid = document.querySelector('.grid-children-change');
 const { unwrapChangeGrid, forceGridAnimation } = wrapGrid(changeGrid);
- 
+
 const updateContents = () => {
-  [...changeGrid.querySelectorAll(".card")].forEach(el => {
+  [...changeGrid.querySelectorAll('.card')].forEach(el => {
     const width = Math.random() * 300;
     const height = Math.random() * 200;
-    const inner = el.querySelector('.card__inner')
-    inner.style.width = `${width}px`
-    inner.style.height = `${height}px`
+    const inner = el.querySelector('.card__inner');
+    inner.style.width = `${width}px`;
+    inner.style.height = `${height}px`;
   });
-  forceGridAnimation()
+  forceGridAnimation();
 };
 
-setInterval(updateContents, 1000)
+setInterval(updateContents, 2000);
 
+// ========================================================
+// nested grid
+// ========================================================
 
+const addCard = container => i => {
+  const randomNumber = Math.floor(Math.random() * 5) + 1;
+  container.insertAdjacentHTML(
+    'beforeend',
+    `
+      <div class="card card--${randomNumber}">
+      <div></div>
+    </div>
+    `
+  );
+};
 
+const nestedGrid = document.querySelector('.nested-grid');
+[...Array(800).keys()].forEach(addCard(nestedGrid));
+
+ wrapGrid(nestedGrid, {duration : 1000});
+
+nestedGrid.addEventListener('click', ev => {
+  let target = ev.target;
+  while (target.tagName !== 'HTML') {
+    if (target.classList.contains('card')) {
+      target.classList.toggle('card--expanded');
+      return;
+    }
+    target = target.parentElement;
+  }
+});

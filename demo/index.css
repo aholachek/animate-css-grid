@@ -174,3 +174,16 @@ button {
   width: 220px;
   height: 80px;
 }
+
+/* ==========================================================================
+   nested grid
+   ========================================================================== */
+
+   .nested-grid {
+     display:grid;
+     grid-gap: .5rem;
+     grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+     grid-template-rows: repeat(auto-fit, minmax(2rem, 1fr));
+   }
+
+  
