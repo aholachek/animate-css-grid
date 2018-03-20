@@ -24,11 +24,7 @@ const grid = document.querySelector(".grid");
 
 const { unwrapGrid, forceGridAnimation } = wrapGrid(grid, {duration: 500});
 
-// optionally, if you are changing grid layout with inline styles and still want the grid to animate
-grid.style.width = '200px'
-forceGridAnimation()
-
-// later, to remove transitions
+// remove transitions
 unwrapGrid()
 
 ```
@@ -40,7 +36,7 @@ Or from a script tag:
 
 <script>
   const grid = document.querySelector(".grid");
-  const { unwrapGrid } = animateCSSGrid.wrapGrid(grid, {stagger: true});
+  animateCSSGrid.wrapGrid(grid, {stagger: true});
 </script>
 ```
 
