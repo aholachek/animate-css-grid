@@ -68,21 +68,21 @@ subjects.addEventListener('click', ev => {
 // ========================================================
 
 // event handler to toggle card size on click
-const changeGrid = document.querySelector('.grid-children-change');
-const { unwrapChangeGrid, forceGridAnimation } = wrapGrid(changeGrid);
+// const changeGrid = document.querySelector('.grid-children-change');
+// const { unwrapChangeGrid, forceGridAnimation } = wrapGrid(changeGrid);
 
-const updateContents = () => {
-  [...changeGrid.querySelectorAll('.card')].forEach(el => {
-    const width = Math.random() * 300;
-    const height = Math.random() * 200;
-    const inner = el.querySelector('.card__inner');
-    inner.style.width = `${width}px`;
-    inner.style.height = `${height}px`;
-  });
-  forceGridAnimation();
-};
+// const updateContents = () => {
+//   [...changeGrid.querySelectorAll('.card')].forEach(el => {
+//     const width = Math.random() * 300;
+//     const height = Math.random() * 200;
+//     const inner = el.querySelector('.card__inner');
+//     inner.style.width = `${width}px`;
+//     inner.style.height = `${height}px`;
+//   });
+//   forceGridAnimation();
+// };
 
-setInterval(updateContents, 2000);
+// setInterval(updateContents, 2000);
 
 // ========================================================
 // nested grid
@@ -101,9 +101,9 @@ const addCard = container => i => {
 };
 
 const nestedGrid = document.querySelector('.nested-grid');
-[...Array(800).keys()].forEach(addCard(nestedGrid));
+[...Array(1000).keys()].forEach(addCard(nestedGrid));
 
- wrapGrid(nestedGrid, {duration : 1000});
+ wrapGrid(nestedGrid, {duration : 1000}, {stagger : true });
 
 nestedGrid.addEventListener('click', ev => {
   let target = ev.target;
