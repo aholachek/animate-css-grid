@@ -181,8 +181,7 @@ export const wrapGrid = (
     requestAnimationFrame(animate);
   };
 
-  const throttledMutationCallback = throttle(mutationCallback, 100);
-  const observer = new MutationObserver(throttledMutationCallback);
+  const observer = new MutationObserver(mutationCallback);
   observer.observe(container, {
     childList: true,
     attributes: true,
