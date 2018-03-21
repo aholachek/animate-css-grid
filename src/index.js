@@ -145,17 +145,18 @@ export const wrapGrid = (
           });
 
         if (stagger) tween.delay(duration / gridItems.length * i);
-
-        const animate = time => {
-          if (!tween.isPlaying()) return;
-          requestAnimationFrame(animate);
-          TWEEN.update(time);
-        };
-
         tween.start();
-        requestAnimationFrame(animate);
       });
+
+    // now, start all the animations
+    const animate = time => {
+      if (TWEEN.getAll().every((t)=>!t.isPlaying())) return;
+      requestAnimationFrame(animate);
+      TWEEN.update(time);
+    };
+    requestAnimationFrame(animate);
   };
+
   const throttledMutationCallback = throttle(mutationCallback, 100);
   const observer = new MutationObserver(throttledMutationCallback);
   observer.observe(container, {
