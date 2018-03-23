@@ -10,8 +10,8 @@
 }
 
 .grid--full {
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-  grid-template-rows: minmax(9rem, 1fr);
+  /* grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); */
+  grid-template-rows: minmax(19rem, 1fr);
 }
 
 /* styling */

@@ -3,6 +3,7 @@
   "version": "0.4.1",
   "description": "Easy, smooth transitions for CSS grid",
   "homepage": "https://github.com/aholachek/animate-css-grid",
+  "keywords" : ["css", "grid", "animation", "transition", "mutation-observer"],
   "repository": {
     "type": "git",
     "url": "https://github.com/aholachek/animate-css-grid"
