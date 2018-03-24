@@ -7,7 +7,7 @@ If the content of the grid changes, or if the grid or one of its children is upd
 
 [Main Codepen Example](https://codepen.io/aholachek/pen/VXjOPB)
 
-[Other Codepen Examples](https://codepen.io/collection/XGWeaG/)
+[Usage with React](https://codepen.io/aholachek/pen/mxwvmV)
 
 ## How to use it
 
