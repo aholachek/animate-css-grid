@@ -4,8 +4,8 @@ import throttle from 'lodash.throttle';
 const DATASET_KEY = 'animateGridId';
 
 // in order to account for scroll, (which we're not listening for)
-// cache the items position relative
-// to the top of the grid
+// always cache the items position relative
+// to the top and left of the grid container
 const getGridAwareBoundingClientRect = (gridBoundingClientRect, el) => {
   const { top, left, width, height } = el.getBoundingClientRect();
   const rect = { top, left, width, height };
@@ -149,6 +149,8 @@ export const wrapGrid = (
               coords.scaleX === 1 &&
               coords.scaleY === 1
             ) {
+              // the animation has completed, lets make sure the filter checks above
+              // don't think it might still be in progress
               delete cachedData.tween;
             }
           });
