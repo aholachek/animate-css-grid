@@ -3,6 +3,9 @@ import throttle from 'lodash.throttle';
 
 const DATASET_KEY = 'animateGridId';
 
+// in order to account for scroll, (which we're not listening for)
+// cache the items position relative
+// to the top of the grid
 const getGridAwareBoundingClientRect = (gridBoundingClientRect, el) => {
   const { top, left, width, height } = el.getBoundingClientRect();
   const rect = { top, left, width, height };
@@ -11,17 +14,13 @@ const getGridAwareBoundingClientRect = (gridBoundingClientRect, el) => {
   return rect;
 };
 
-const rectInViewport = (rect, gridBoundingClientRect) => {
-  const left = rect.left;
-  const top = rect.top + gridBoundingClientRect.top;
-  const right = left + rect.width;
-  const bottom = top + rect.height;
-  return (
-    bottom > 0 &&
-    top < window.innerHeight &&
-    right > 0 &&
-    left < window.innerWidth
-  );
+// the function used during the tweening
+const applyCoordTransform = (el, coords) => {
+  el.style.transform = `translate(${coords.translateX}px, ${
+    coords.translateY
+  }px) scale(${coords.scaleX}, ${coords.scaleY})`;
+  el.children[0].style.transform = `scale(${1 / coords.scaleX},${1 /
+    coords.scaleY})`;
 };
 
 // return a function that take a reference to a grid dom node and optional config
@@ -73,8 +72,8 @@ export const wrapGrid = (
 
     const childrenElements = [...container.children];
 
-    // stop current transitions and cache relevant position data for in-transit elements
-    const x = childrenElements
+    // stop current transitions and remove transforms on transitioning elements
+    childrenElements
       .filter(el => {
         const cachedData = cachedPositionData[el.dataset[DATASET_KEY]];
         if (cachedData && cachedData.tween) {
@@ -109,12 +108,7 @@ export const wrapGrid = (
           boundingClientRect.width === cachedData.rect.width &&
           boundingClientRect.height === cachedData.rect.height
         ) {
-          return true;
-        } else if (
-          !rectInViewport(boundingClientRect, gridBoundingClientRect) &&
-          !rectInViewport(cachedData.rect, gridBoundingClientRect)
-        ) {
-          // if it's not in the viewport, dont animate it
+          // if it hasn't moved, dont animate it
           return false;
         }
         return true;
@@ -136,12 +130,9 @@ export const wrapGrid = (
         coords.translateX = cachedData.rect.left - left;
         coords.translateY = cachedData.rect.top - top;
 
-        el.style.transform = `translate(${coords.translateX}px, ${
-          coords.translateY
-        }px) scale(${coords.scaleX}, ${coords.scaleY})`;
         el.style.transformOrigin = '0 0';
-        el.children[0].style.transform = `scale(${1 / coords.scaleX},${1 /
-          coords.scaleY})`;
+
+        applyCoordTransform(el, coords);
 
         const tween = new TWEEN.Tween(coords)
           .to({ translateX: 0, translateY: 0, scaleX: 1, scaleY: 1 }, duration)
@@ -151,11 +142,7 @@ export const wrapGrid = (
             requestAnimationFrame(() => {
               recordPositions([el]);
             });
-            el.style.transform = `translate(${coords.translateX}px, ${
-              coords.translateY
-            }px) scale(${coords.scaleX}, ${coords.scaleY})`;
-            el.children[0].style.transform = `scale(${1 / coords.scaleX},${1 /
-              coords.scaleY})`;
+            applyCoordTransform(el, coords);
             if (
               coords.translateX === 0 &&
               coords.translateY === 0 &&
@@ -166,7 +153,8 @@ export const wrapGrid = (
             }
           });
 
-        if (stagger) tween.delay(duration / gridItems.length * i);
+        if (stagger)
+          tween.delay(duration / gridItems.length * i);
 
         tween.start();
         cachedData.tween = tween;

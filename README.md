@@ -5,9 +5,9 @@
 This small script makes it easy to make sure your CSS grid transitions gracefully from one state to another.
 If the content of the grid changes, or if the grid or one of its children is updated with the addition or removal of a class, the grid will automatically transition to its new configuration.
 
-[Main Codepen Example](https://codepen.io/aholachek/pen/VXjOPB)
+[Basic Codepen Example](https://codepen.io/aholachek/pen/VXjOPB)
 
-[Usage with React](https://codepen.io/aholachek/pen/mxwvmV)
+[React Example](https://codepen.io/aholachek/pen/mxwvmV)
 
 ## How to use it
 
@@ -91,7 +91,7 @@ Example:
 
 ## How it works
 
-The script registers a `MutationObserver` that activates when the grid or one of its children adds or loses a class or element.
+The script registers a `MutationObserver` that activates when the grid or one of its children adds or loses a class or element. That means there's no need to remove the animations before removing the grid, everything should be cleaned up automatically.
 It uses the FLIP animation technique to smoothly update the grid, applying a counter transform to the children of each item so that they do not appear distorted while the transition occurs.
 
-It should work on container elements without CSS grid applied as well, but was developed with CSS grid in mind.
+It should work on container elements without CSS grid applied as well, but was developed and tested with CSS grid in mind.
