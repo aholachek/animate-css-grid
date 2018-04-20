@@ -19,8 +19,10 @@ const applyCoordTransform = (el, coords) => {
   el.style.transform = `translate(${coords.translateX}px, ${
     coords.translateY
   }px) scale(${coords.scaleX}, ${coords.scaleY})`;
-  el.children[0].style.transform = `scale(${1 / coords.scaleX},${1 /
-    coords.scaleY})`;
+  if (el.children[0]) {
+    el.children[0].style.transform = `scale(${1 / coords.scaleX},${1 /
+      coords.scaleY})`;
+  }
 };
 
 // return a function that take a reference to a grid dom node and optional config
@@ -84,7 +86,9 @@ export const wrapGrid = (
       })
       .forEach(el => {
         el.style.transform = '';
-        el.children[0].style.transform = '';
+        if (el.children[0]) {
+          el.children[0].style.transform = '';
+        }
       });
 
     childrenElements
@@ -155,8 +159,7 @@ export const wrapGrid = (
             }
           });
 
-        if (stagger)
-          tween.delay(duration / gridItems.length * i);
+        if (stagger) tween.delay(duration / gridItems.length * i);
 
         tween.start();
         cachedData.tween = tween;
