@@ -136,6 +136,20 @@ export const wrapGrid = (
 
         el.style.transformOrigin = '0 0';
 
+        const firstChild = el.children[0];
+        // different transform origins give different effects. "50% 50%" is default
+        if (firstChild) {
+          const {
+            left: childLeft,
+            top: childTop,
+          } = getGridAwareBoundingClientRect(gridBoundingClientRect, firstChild);
+          if (
+            childLeft === left &&
+            childTop === top
+          )
+            firstChild.style.transformOrigin = '0 0';
+        }
+
         applyCoordTransform(el, coords);
 
         const tween = new TWEEN.Tween(coords)
