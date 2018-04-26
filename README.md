@@ -1,6 +1,6 @@
 # Animate CSS Grid
 
-![demo of animate-css-grid in action](https://furtive-discussion.surge.sh/grid-copy.gif)
+![demo of animate-css-grid in action](https://furtive-discussion.surge.sh/grid-1.gif)
 
 This small script makes it easy to make sure your CSS grid transitions gracefully from one state to another.
 If the content of the grid changes, or if the grid or one of its children is updated with the addition or removal of a class, the grid will automatically transition to its new configuration.
