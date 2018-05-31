@@ -33,7 +33,7 @@ grid.addEventListener('click', ev => {
   }
 });
 
-const { unwrapGrid } = wrapGrid(grid, { stagger : true });
+const { unwrapGrid } = wrapGrid(grid, { stagger : true, easing: 'backOut' });
 
 document
   .querySelector('.js-remove-listener')
