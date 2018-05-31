@@ -1,5 +1,5 @@
 import throttle from 'lodash.throttle';
-import { tween, styler, easing as popmotionEasing } from 'popmotion';
+import { tween, styler, easing as popmotionEasing, delay } from 'popmotion';
 import { onFrameEnd } from 'framesync';
 
 const DATASET_KEY = 'animateGridId';
@@ -31,7 +31,7 @@ const applyCoordTransform = (el, coords, { immediate } = {}) => {
 // return a function that take a reference to a grid dom node and optional config
 export const wrapGrid = (
   container,
-  { duration = 250, stagger, easing = 'easeInOut' } = {}
+  { duration = 250, stagger = 0, easing = 'easeInOut' } = {}
 ) => {
   // all cached position data, and in-progress tween data, is stored here
   const cachedPositionData = {};
@@ -72,9 +72,9 @@ export const wrapGrid = (
     childrenElements
       .filter(el => {
         const cachedData = cachedPositionData[el.dataset[DATASET_KEY]];
-        if (cachedData && cachedData.tween) {
-          cachedData.tween.stop();
-          delete cachedData.tween;
+        if (cachedData && cachedData.stopTween) {
+          cachedData.stopTween();
+          delete cachedData.stopTween;
           return true;
         }
       })
@@ -161,15 +161,24 @@ export const wrapGrid = (
 
           applyCoordTransform(el, coords, { immediate: true });
           // now start the animation
-          const { stop } = tween({
-            from: coords,
-            to: { translateX: 0, translateY: 0, scaleX: 1, scaleY: 1 },
-            duration,
-            ease: popmotionEasing[easing],
-          }).start(transforms => {
-            applyCoordTransform(el, transforms);
-            onFrameEnd(() => recordPositions([el]));
-          });
+          const startAnimation = () => {
+            const { stop } = tween({
+              from: coords,
+              to: { translateX: 0, translateY: 0, scaleX: 1, scaleY: 1 },
+              duration,
+              ease: popmotionEasing[easing],
+            }).start(transforms => {
+              applyCoordTransform(el, transforms);
+              onFrameEnd(() => recordPositions([el]));
+            });
+            cachedData.stopTween = stop;
+          };
+
+          if (typeof stagger !== 'number') startAnimation();
+          else {
+            const timeoutId = setTimeout(startAnimation, stagger * i);
+            cachedData.stopTween = () => clearTimeout(timeoutId);
+          }
         }
       );
   };

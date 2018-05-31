@@ -33,7 +33,7 @@ grid.addEventListener('click', ev => {
   }
 });
 
-const { unwrapGrid } = wrapGrid(grid, { stagger : true, easing: 'backOut' });
+const { unwrapGrid } = wrapGrid(grid, { stagger : 100, easing: 'backOut' });
 
 document
   .querySelector('.js-remove-listener')
@@ -103,7 +103,7 @@ const addCard = container => i => {
 const nestedGrid = document.querySelector('.nested-grid');
 [...Array(1000).keys()].forEach(addCard(nestedGrid));
 
- wrapGrid(nestedGrid, {duration : 1000}, {stagger : true });
+ wrapGrid(nestedGrid, {duration : 300, stagger : 10 });
 
 nestedGrid.addEventListener('click', ev => {
   let target = ev.target;
