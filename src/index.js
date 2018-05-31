@@ -148,6 +148,7 @@ export const wrapGrid = (
           i,
           gridItems
         ) => {
+          const firstChild = el.children[0];
           const cachedData = cachedPositionData[el.dataset[DATASET_KEY]];
           const coords = {};
           coords.scaleX = cachedData.rect.width / width;
@@ -156,7 +157,7 @@ export const wrapGrid = (
           coords.translateY = cachedData.rect.top - top;
 
           el.style.transformOrigin = '0 0';
-          if (childLeft === left && childTop === top)
+          if (firstChild && childLeft === left && childTop === top)
             firstChild.style.transformOrigin = '0 0';
 
           applyCoordTransform(el, coords, { immediate: true });
