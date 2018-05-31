@@ -40,15 +40,15 @@ Optional config object:
 
 ```js
 {
-  // default is false
-  stagger: true,
-  // default is 250 ms
+  // int: default is 0 ms
+  stagger: 100,
+  // int: default is 250 ms
   duration: 500
-  // default is 'Quadratic.InOut'
-  easing: 'Sinusoidal.InOut'
+  // string: default is 'easeInOut'
+  easing: 'backInOut'
 }
 ```
-[Available easing functions](https://sole.github.io/tween.js/examples/03_graphs.html).
+[View available easing functions here](https://popmotion.io/api/easing/)
 
 Two functions are returned by the `wrapGrid` call that you probably won't need to use:
 
