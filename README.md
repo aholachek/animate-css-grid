@@ -32,7 +32,7 @@ Or from a script tag:
 
 <script>
   const grid = document.querySelector(".grid");
-  animateCSSGrid.wrapGrid(grid, {stagger: true, duration : 600});
+  animateCSSGrid.wrapGrid(grid, {duration : 600});
 </script>
 ```
 

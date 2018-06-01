@@ -15,6 +15,7 @@
     "url": "https://github.com/aholachek/animate-css-grid"
   },
   "main": "dist/main.js",
+  "sideEffects": false,
   "scripts": {
     "prepublishOnly": "yarn run build",
     "build": "webpack --mode production",

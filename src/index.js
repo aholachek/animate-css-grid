@@ -1,5 +1,7 @@
 import throttle from 'lodash.throttle';
-import { tween, styler, easing as popmotionEasing, delay } from 'popmotion';
+import tween from 'popmotion/animations/tween';
+import styler from 'stylefire';
+import * as popmotionEasing from 'popmotion/easing';
 import { onFrameEnd } from 'framesync';
 
 const DATASET_KEY = 'animateGridId';
