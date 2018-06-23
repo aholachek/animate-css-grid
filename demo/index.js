@@ -33,7 +33,7 @@ grid.addEventListener('click', ev => {
   }
 });
 
-const { unwrapGrid } = wrapGrid(grid, { stagger : 20, easing: 'backOut' });
+const { unwrapGrid } = wrapGrid(grid, { stagger: 20, easing: 'backOut' });
 
 document
   .querySelector('.js-remove-listener')
@@ -103,7 +103,7 @@ const addCard = container => i => {
 const nestedGrid = document.querySelector('.nested-grid');
 [...Array(1000).keys()].forEach(addCard(nestedGrid));
 
- wrapGrid(nestedGrid, {duration : 300, stagger : 10 });
+wrapGrid(nestedGrid, { duration: 300, stagger: 10 });
 
 nestedGrid.addEventListener('click', ev => {
   let target = ev.target;
@@ -115,3 +115,48 @@ nestedGrid.addEventListener('click', ev => {
     target = target.parentElement;
   }
 });
+
+// ========================================================
+// hidden cards grid
+// ========================================================
+
+const hiddenCardGrid = document.querySelector('.hidden-cards-grid');
+
+document
+  .querySelector('.js-toggle-grid')
+  .addEventListener('click', () => hiddenCardGrid.classList.toggle('grid--full'));
+
+document.querySelector('.js-hide-button').addEventListener('click', () => {
+  [...hiddenCardGrid.querySelectorAll('.card')].forEach(el =>
+    el.classList.remove('card--hidden')
+  );
+});
+
+document.querySelector('.js-add-card').addEventListener('click', () => {
+  const randomNumber = Math.floor(Math.random() * 5) + 1;
+  hiddenCardGrid.insertAdjacentHTML(
+    'beforeend',
+    `
+      <div class="card card--${randomNumber}">
+      <div>
+        <div class="card__avatar"></div>
+        <div class="card__title"></div>
+        <div class="card__description"></div>
+      </div>
+    </div>
+    `
+  );
+});
+
+hiddenCardGrid.addEventListener('click', ev => {
+  let target = ev.target;
+  while (target.tagName !== 'HTML') {
+    if (target.classList.contains('card')) {
+      target.classList.toggle('card--hidden');
+      return;
+    }
+    target = target.parentElement;
+  }
+});
+
+wrapGrid(hiddenCardGrid, { stagger: 20, easing: 'backOut', duration: 10000 });

@@ -16,6 +16,10 @@
 
 /* styling */
 
+.card--hidden {
+  display:none !important;
+}
+
 .card--expanded {
   grid-column: span 2;
   grid-row: span 2;
@@ -187,4 +191,4 @@ button {
      grid-template-rows: repeat(auto-fit, minmax(2rem, 1fr));
    }
 
-  
+
