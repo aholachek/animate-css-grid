@@ -178,6 +178,7 @@ export const wrapGrid = (
               ease: popmotionEasing[easing],
             }).start(transforms => {
               applyCoordTransform(el, transforms);
+              // this helps prevent layout thrashing
               onFrameEnd(() => recordPositions([el]));
             });
             cachedData.stopTween = stop;
