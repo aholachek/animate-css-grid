@@ -48,6 +48,7 @@ Optional config object:
   easing: 'backInOut'
 }
 ```
+
 [View available easing functions here](https://popmotion.io/api/easing/)
 
 Two functions are returned by the `wrapGrid` call that you probably won't need to use:
@@ -65,22 +66,20 @@ forceGridAnimation()
 
 // if you want to remove animations but not the grid itself
 unwrapGrid()
-
 ```
-
 
 ## Requirements
 
 1.  The updates to the grid will have to come from addition or removal of a class or element. Currently, inline style updates will not trigger transitions. (Although you can manually trigger transitions in that case by calling `forceGridAnimation()`)
-2.  If a grid item has children, they should be surrounded by a single container element.
+2.  **Important** If a grid item has children, they should be surrounded by a single container element. This is so we can apply a counter scale and prevent children elements from getting warped during scale transitions of the parent.
 
 Example:
 
 ```html
-<!-- grid style applied via a class -->
+<!-- grid class -->
 <ul class="some-grid-class-that-changes">
-  <!-- each grid item has a single direct child -->
   <li class="grid-item">
+    <!-- each grid item must have a single direct child -->
     <div>
       <h3>Item title</h3>
       <div>Item body</div>
