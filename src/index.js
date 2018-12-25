@@ -1,8 +1,8 @@
 import throttle from 'lodash.throttle';
-import tween from 'popmotion/animations/tween';
+import { tween } from 'popmotion';
 import styler from 'stylefire';
-import * as popmotionEasing from 'popmotion/easing';
-import { onFrameEnd } from 'framesync';
+import * as popmotionEasing from '@popmotion/easing';
+import sync from 'framesync';
 
 const DATASET_KEY = 'animateGridId';
 
@@ -179,7 +179,7 @@ export const wrapGrid = (
             }).start(transforms => {
               applyCoordTransform(el, transforms);
               // this helps prevent layout thrashing
-              onFrameEnd(() => recordPositions([el]));
+              sync.postRender(() => recordPositions([el]));
             });
             cachedData.stopTween = stop;
           };
