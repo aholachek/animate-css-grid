@@ -101,7 +101,7 @@ const addCard = container => i => {
 };
 
 const nestedGrid = document.querySelector('.nested-grid');
-[...Array(1000).keys()].forEach(addCard(nestedGrid));
+[...Array(400).keys()].forEach(addCard(nestedGrid));
 
 wrapGrid(nestedGrid, { duration: 300, stagger: 10 });
 

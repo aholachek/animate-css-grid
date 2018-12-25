@@ -1,6 +1,5 @@
 import throttle from 'lodash.throttle';
 import { tween } from 'popmotion';
-import styler from 'stylefire';
 import * as popmotionEasing from '@popmotion/easing';
 import sync from 'framesync';
 
@@ -24,15 +23,28 @@ const getGridAwareBoundingClientRect = (gridBoundingClientRect, el) => {
 };
 
 // the function used during the tweening
-const applyCoordTransform = (el, coords, { immediate } = {}) => {
-  const parentStyler = styler(el).set(coords);
-  immediate && parentStyler.render();
+const applyCoordTransform = (
+  el,
+  { translateX, translateY, scaleX, scaleY },
+  { immediate } = {}
+) => {
+  const isFinished =
+    translateX === 0 && translateY === 0 && scaleX === 1 && scaleY === 1;
+  const styleEl = () => {
+    el.style.transform = isFinished
+      ? ''
+      : `translateX(${translateX}px) translateY(${translateY}px) scaleX(${scaleX}) scaleY(${scaleY})`;
+  };
+  if (immediate) styleEl();
+  else sync.render(styleEl);
   if (el.children[0]) {
-    const childStyler = styler(el.children[0]).set({
-      scaleX: 1 / coords.scaleX,
-      scaleY: 1 / coords.scaleY,
-    });
-    immediate && childStyler.render();
+    const styleChild = () => {
+      el.children[0].style.transform = isFinished
+        ? ''
+        : `scaleX(${1 / scaleX}) scaleY(${1 / scaleY})`;
+    };
+    if (immediate) styleChild();
+    else sync.render(styleChild);
   }
 };
 
@@ -56,6 +68,9 @@ export const wrapGrid = (
       const animateGridId = el.dataset[DATASET_KEY];
       const rect = getGridAwareBoundingClientRect(gridBoundingClientRect, el);
       cachedPositionData[animateGridId].rect = rect;
+      cachedPositionData[
+        animateGridId
+      ].gridBoundingClientRect = gridBoundingClientRect;
     });
   };
   recordPositions(container.children);
@@ -153,8 +168,7 @@ export const wrapGrid = (
             boundingClientRect: { top, left, width, height },
             childCoords: { childLeft, childTop },
           },
-          i,
-          gridItems
+          i
         ) => {
           const firstChild = el.children[0];
           const cachedData = cachedPositionData[el.dataset[DATASET_KEY]];
@@ -186,7 +200,9 @@ export const wrapGrid = (
 
           if (typeof stagger !== 'number') startAnimation();
           else {
-            const timeoutId = setTimeout(startAnimation, stagger * i);
+            const timeoutId = setTimeout(() => {
+              sync.update(startAnimation);
+            }, stagger * i);
             cachedData.stopTween = () => clearTimeout(timeoutId);
           }
         }
