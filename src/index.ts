@@ -1,5 +1,17 @@
 import throttle from 'lodash/throttle'
-import * as untypedPopmotionEasing from '@popmotion/easing' ;
+import {
+  linear,
+  easeIn,
+  easeOut,
+  easeInOut,
+  circIn,
+  circOut,
+  circInOut,
+  backIn,
+  backOut,
+  backInOut,
+  anticipate,
+} from '@popmotion/easing' ;
 import { tween } from 'popmotion';
 import sync from 'framesync';
 import {
@@ -12,7 +24,19 @@ import {
   WrapGridArguments,
 } from "./types";
 
-const popmotionEasing: PopmotionEasing = untypedPopmotionEasing
+const popmotionEasing: PopmotionEasing = {
+  linear,
+  easeIn,
+  easeOut,
+  easeInOut,
+  circIn,
+  circOut,
+  circInOut,
+  backIn,
+  backOut,
+  backInOut,
+  anticipate,
+}
 
 const DATASET_KEY = "animateGridId";
 
