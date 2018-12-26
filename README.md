@@ -115,5 +115,5 @@ It should work on container elements without CSS grid applied as well, but was d
 
 ## Usage with Frameworks like React
 
-The `animate-css-grid` library can easily be used with frameworks with React.
+The `animate-css-grid` library can easily be used with frameworks like React.
 [Check out an example on Codepen.](https://codepen.io/aholachek/pen/mxwvmV)

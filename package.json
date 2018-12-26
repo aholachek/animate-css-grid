@@ -1,6 +1,6 @@
 {
   "name": "animate-css-grid",
-  "version": "1.1.0-beta0",
+  "version": "1.1.0",
   "description": "Easy, smooth transitions for CSS grid",
   "homepage": "https://github.com/aholachek/animate-css-grid",
   "keywords": [
@@ -8,12 +8,9 @@
     "grid",
     "animation",
     "transition",
-    "mutation-observer"
+    "mutation-observer",
+    "layout"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/aholachek/animate-css-grid"
-  },
   "main": "dist/main.js",
   "sideEffects": false,
   "scripts": {
@@ -22,10 +19,14 @@
     "dev": "./node_modules/.bin/webpack-dev-server --mode development --config demo/webpack.config.js",
     "check-types": "tsc",
     "preversion": "npm run check-types"
-
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Alex Holachek",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aholachek/animate-css-grid"
+  },
+  "bugs": "https://github.com/aholachek/animate-css-grid/issues",
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
