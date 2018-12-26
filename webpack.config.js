@@ -3,6 +3,7 @@ module.exports = {
     library: 'animateCSSGrid',
     libraryTarget: 'umd',
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
