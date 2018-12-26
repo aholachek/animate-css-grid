@@ -1,16 +1,28 @@
 # Animate CSS Grid
 
-### Image Grid
+Seamlessly animate all CSS grid properties, including:
 
-![demo of animate-css-grid in action](./examples/photogrid.gif)
+### `grid-column` and `grid-row`
 
-[Fork this Example on Codepen](https://codepen.io/aholachek/pen/VXjOPB)
+<a href="https://codepen.io/aholachek/pen/VXjOPB">
+<img src="./examples/grid-col-optimized.gif" alt="grid-column and grid-row" width="500px">
+</a>
 
-## Expanding Cards with React
 
-![demo of animate-css-grid in action](./examples/react-cards.gif)
+### `grid-template-columns`
 
-[Fork this Example on Codepen](https://codepen.io/aholachek/pen/mxwvmV)
+<a href="https://codepen.io/aholachek/pen/VXjOPB">
+<img src="./examples/grid-template-columns-optimized.gif" alt="grid-template-columns" width="500px">
+</a>
+
+### `grid-gap`
+
+<a href="https://codepen.io/aholachek/pen/VXjOPB">
+<img src="./examples/grid-gap-optimized.gif" alt="grid-gap" width="500px">
+</a>
+
+
+#### [Fork Photo Grid Example on Codepen](https://codepen.io/aholachek/pen/VXjOPB)
 
 This script makes it easy to transition your CSS grid gracefully from one state to another.
 If the content of the grid changes, or if the grid or one of its children is updated with the addition or removal of a class, the grid will automatically transition to its new configuration.
@@ -100,3 +112,8 @@ The script registers a `MutationObserver` that activates when the grid or one of
 It uses the FLIP animation technique to smoothly update the grid, applying a counter transform to the children of each item so that they do not appear distorted while the transition occurs.
 
 It should work on container elements without CSS grid applied as well, but was developed and tested with CSS grid in mind.
+
+## Usage with Frameworks like React
+
+The `animate-css-grid` library can easily be used with frameworks with React.
+[Check out an example on Codepen.](https://codepen.io/aholachek/pen/mxwvmV)
