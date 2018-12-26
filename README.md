@@ -1,13 +1,19 @@
 # Animate CSS Grid
 
-![demo of animate-css-grid in action](https://furtive-discussion.surge.sh/grid-1.gif)
+### Image Grid
 
-This small script makes it easy to make sure your CSS grid transitions gracefully from one state to another.
+![demo of animate-css-grid in action](./examples/photogrid.gif)
+
+[Fork this Example on Codepen](https://codepen.io/aholachek/pen/VXjOPB)
+
+## Expanding Cards with React
+
+![demo of animate-css-grid in action](./examples/react-cards.gif)
+
+[Fork this Example on Codepen](https://codepen.io/aholachek/pen/mxwvmV)
+
+This script makes it easy to transition your CSS grid gracefully from one state to another.
 If the content of the grid changes, or if the grid or one of its children is updated with the addition or removal of a class, the grid will automatically transition to its new configuration.
-
-[Basic Codepen Example](https://codepen.io/aholachek/pen/VXjOPB)
-
-[React Example](https://codepen.io/aholachek/pen/mxwvmV)
 
 ## How to use it
 
@@ -16,7 +22,7 @@ If the grid is removed from the page, the animations will automatically be clean
 
 ES6 Module:
 
-`yarn add animate-css-grid`
+`yarn add animate-css-grid` or `npm install animate-css-grid`
 
 ```js
 import { wrapGrid } from animateCSSGrid
