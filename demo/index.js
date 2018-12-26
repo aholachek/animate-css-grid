@@ -1,4 +1,4 @@
-import { wrapGrid } from '../src/index.js';
+import { wrapGrid } from '../src/index.ts';
 
 const grid = document.querySelector('.grid');
 
@@ -46,7 +46,7 @@ document
 const subjects = document.querySelector('.subjects');
 
 // animate the grid
-const { unwrapGridSubjects } = wrapGrid(subjects, { easing: 'Linear.None' });
+const { unwrapGridSubjects } = wrapGrid(subjects, { easing: 'linear' });
 
 // add a click handler
 subjects.addEventListener('click', ev => {
@@ -101,7 +101,7 @@ const addCard = container => i => {
 };
 
 const nestedGrid = document.querySelector('.nested-grid');
-[...Array(1000).keys()].forEach(addCard(nestedGrid));
+[...Array(400).keys()].forEach(addCard(nestedGrid));
 
 wrapGrid(nestedGrid, { duration: 300, stagger: 10 });
 
