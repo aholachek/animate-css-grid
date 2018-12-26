@@ -20,7 +20,9 @@
     "prepublishOnly": "yarn run build",
     "build": "webpack --mode production",
     "dev": "./node_modules/.bin/webpack-dev-server --mode development --config demo/webpack.config.js",
-    "check-types": "tsc"
+    "check-types": "tsc",
+    "preversion": "npm run check-types"
+
   },
   "author": "",
   "license": "ISC",
