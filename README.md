@@ -67,7 +67,14 @@ Optional config object:
 }
 ```
 
-[View available easing functions here](https://popmotion.io/api/easing/)
+### Easing functions
+- `'linear'`
+- `'easeIn'` / `'easeOut'` / `'easeInOut'`
+- `'circIn'` / `'circOut'` / `'circInOut'`
+- `'backIn'` / `'backOut'` / `'backInOut'`
+- `'anticipate'`
+
+[Learn more about available easing functions here.](https://popmotion.io/api/easing/)
 
 Two functions are returned by the `wrapGrid` call that you probably won't need to use:
 
