@@ -5,20 +5,20 @@ Seamlessly animate all CSS grid properties, including:
 ### `grid-column` and `grid-row`
 
 <a href="https://codepen.io/aholachek/pen/VXjOPB">
-<img src="./examples/grid-col-optimized.gif" alt="grid-column and grid-row" width="500px">
+<img src="./examples/grid-column-optimized.gif" alt="grid-column and grid-row" width="500px">
 </a>
 
 
 ### `grid-template-columns`
 
 <a href="https://codepen.io/aholachek/pen/VXjOPB">
-<img src="./examples/grid-template-columns-optimized.gif" alt="grid-template-columns" width="500px">
+<img src="./examples/grid-template-columns-optimized-1.gif" alt="grid-template-columns" width="500px">
 </a>
 
 ### `grid-gap`
 
 <a href="https://codepen.io/aholachek/pen/VXjOPB">
-<img src="./examples/grid-gap-optimized.gif" alt="grid-gap" width="500px">
+<img src="./examples/grid-gap-optimized-1.gif" alt="grid-gap" width="500px">
 </a>
 
 
