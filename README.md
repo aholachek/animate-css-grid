@@ -67,7 +67,8 @@ Optional config object:
 }
 ```
 
-### Easing functions
+Available easing functions:
+
 - `'linear'`
 - `'easeIn'` / `'easeOut'` / `'easeInOut'`
 - `'circIn'` / `'circOut'` / `'circInOut'`
