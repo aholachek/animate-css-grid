@@ -11,6 +11,7 @@
     "mutation-observer",
     "layout"
   ],
+  "typings": "dist/index.d.ts",
   "main": "dist/main.js",
   "sideEffects": false,
   "scripts": {
