@@ -7,7 +7,9 @@
     "rules": {
         "quotemark": [true, "single", "jsx-double"],
         "interface-name":false,
-        "object-literal-sort-keys": false
+        "object-literal-sort-keys": false,
+        "arrow-parens": [true, "ban-single-arg-parens"],
+        "curly":false
     },
     "rulesDirectory": []
 }

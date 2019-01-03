@@ -3106,16 +3106,16 @@ pkg-dir@^3.0.0:
   dependencies:
     find-up "^3.0.0"
 
-popmotion@^8.5.4:
-  version "8.5.4"
-  resolved "https://registry.yarnpkg.com/popmotion/-/popmotion-8.5.4.tgz#db6393f745df585290f0858207561a9bbba545b5"
+popmotion@^8.5.5:
+  version "8.5.5"
+  resolved "https://registry.yarnpkg.com/popmotion/-/popmotion-8.5.5.tgz#0b6bfa6c82d457e4cccd2375923539b6d975b9e8"
   dependencies:
     "@popmotion/easing" "^1.0.1"
     "@popmotion/popcorn" "^0.3.0"
     framesync "^4.0.0"
     hey-listen "^1.0.5"
     style-value-types "^3.0.6"
-    stylefire "^2.0.7"
+    stylefire "^2.3.4"
     tslib "^1.9.1"
 
 portfinder@^1.0.9:
@@ -3779,9 +3779,9 @@ style-value-types@^3.0.6, style-value-types@^3.0.7:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/style-value-types/-/style-value-types-3.0.7.tgz#6e7a22cc8b1a4465193268ed66ad5f2a82579054"
 
-stylefire@^2.0.7:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/stylefire/-/stylefire-2.3.3.tgz#25a32d7aeece8cf2ed499613bf4fb3db18e6dece"
+stylefire@^2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/stylefire/-/stylefire-2.3.4.tgz#261957f18683d8e44c89310ff902bec08a83d26a"
   dependencies:
     framesync "^4.0.0"
     hey-listen "^1.0.4"

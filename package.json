@@ -43,6 +43,6 @@
   "dependencies": {
     "@popmotion/easing": "^1.0.1",
     "lodash.throttle": "^4.1.1",
-    "popmotion": "^8.5.4"
+    "popmotion": "^8.5.5"
   }
 }

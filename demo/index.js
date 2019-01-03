@@ -33,7 +33,7 @@ grid.addEventListener('click', ev => {
   }
 });
 
-const { unwrapGrid } = wrapGrid(grid, { stagger: 20, easing: 'backOut' });
+const { unwrapGrid } = wrapGrid(grid, { easing: 'backOut', duration: 500 });
 
 document
   .querySelector('.js-remove-listener')
@@ -67,22 +67,21 @@ subjects.addEventListener('click', ev => {
 // children change
 // ========================================================
 
-// event handler to toggle card size on click
-// const changeGrid = document.querySelector('.grid-children-change');
-// const { unwrapChangeGrid, forceGridAnimation } = wrapGrid(changeGrid);
+const changeGrid = document.querySelector('.grid-children-change');
+const { unwrapChangeGrid, forceGridAnimation } = wrapGrid(changeGrid);
 
-// const updateContents = () => {
-//   [...changeGrid.querySelectorAll('.card')].forEach(el => {
-//     const width = Math.random() * 300;
-//     const height = Math.random() * 200;
-//     const inner = el.querySelector('.card__inner');
-//     inner.style.width = `${width}px`;
-//     inner.style.height = `${height}px`;
-//   });
-//   forceGridAnimation();
-// };
+const updateContents = () => {
+  [...changeGrid.querySelectorAll('.card')].forEach(el => {
+    const width = Math.random() * 300;
+    const height = Math.random() * 200;
+    const inner = el.querySelector('.card__inner');
+    inner.style.width = `${width}px`;
+    inner.style.height = `${height}px`;
+  });
+  forceGridAnimation();
+};
 
-// setInterval(updateContents, 2000);
+setInterval(updateContents, 2000);
 
 // ========================================================
 // nested grid
@@ -103,7 +102,7 @@ const addCard = container => i => {
 const nestedGrid = document.querySelector('.nested-grid');
 [...Array(400).keys()].forEach(addCard(nestedGrid));
 
-wrapGrid(nestedGrid, { duration: 300, stagger: 10 });
+wrapGrid(nestedGrid, { duration: 300 });
 
 nestedGrid.addEventListener('click', ev => {
   let target = ev.target;
@@ -124,7 +123,9 @@ const hiddenCardGrid = document.querySelector('.hidden-cards-grid');
 
 document
   .querySelector('.js-toggle-grid')
-  .addEventListener('click', () => hiddenCardGrid.classList.toggle('grid--full'));
+  .addEventListener('click', () =>
+    hiddenCardGrid.classList.toggle('grid--full')
+  );
 
 document.querySelector('.js-hide-button').addEventListener('click', () => {
   [...hiddenCardGrid.querySelectorAll('.card')].forEach(el =>

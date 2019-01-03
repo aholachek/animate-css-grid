@@ -41,8 +41,10 @@ const popmotionEasing: PopmotionEasing = {
 
 const DATASET_KEY = 'animateGridId';
 
-const toArray = (arrLike: ArrayLike<any>): any[] =>
-  Array.prototype.slice.call(arrLike);
+const toArray = (arrLike: ArrayLike<any>): any[] => {
+  if (!arrLike) return [];
+  return Array.prototype.slice.call(arrLike);
+};
 
 // in order to account for scroll, (which we're not listening for)
 // always cache the item's position relative
@@ -113,7 +115,7 @@ export const wrapGrid = (
     elements: HTMLCollectionOf<HTMLElement> | HTMLElement[],
   ) => {
     const gridBoundingClientRect = container.getBoundingClientRect();
-    toArray(elements).forEach((el) => {
+    toArray(elements).forEach(el => {
       if (typeof el.getBoundingClientRect !== 'function') {
         return;
       }
@@ -160,7 +162,7 @@ export const wrapGrid = (
     const childrenElements = toArray(container.children) as HTMLElement[];
     // stop current transitions and remove transforms on transitioning elements
     childrenElements
-      .filter((el) => {
+      .filter(el => {
         const itemPosition =
           cachedPositionData[el.dataset[DATASET_KEY] as string];
         if (itemPosition && itemPosition.stopTween) {
@@ -169,7 +171,7 @@ export const wrapGrid = (
           return true;
         }
       })
-      .forEach((el) => {
+      .forEach(el => {
         el.style.transform = '';
         const firstChild = el.children[0] as HTMLElement;
         if (firstChild) {
@@ -177,7 +179,7 @@ export const wrapGrid = (
         }
       });
     const animatedGridChildren = childrenElements
-      .map((el) => ({
+      .map(el => ({
         childCoords: {} as ChildBoundingClientRect,
         el,
         boundingClientRect: getGridAwareBoundingClientRect(
@@ -216,7 +218,7 @@ export const wrapGrid = (
 
     animatedGridChildren
       // do this measurement first so as not to cause layout thrashing
-      .map((data) => {
+      .map(data => {
         const firstChild = data.el.children[0] as HTMLElement;
         // different transform origins give different effects. "50% 50%" is default
         if (firstChild) {
