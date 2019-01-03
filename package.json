@@ -1,6 +1,6 @@
 {
   "name": "animate-css-grid",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Easy, smooth transitions for CSS grid",
   "homepage": "https://github.com/aholachek/animate-css-grid",
   "keywords": [
@@ -11,7 +11,7 @@
     "mutation-observer",
     "layout"
   ],
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "main": "dist/main.js",
   "sideEffects": false,
   "scripts": {
