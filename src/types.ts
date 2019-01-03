@@ -23,8 +23,9 @@ export interface ChildBoundingClientRect {
 
 export interface ItemPosition {
   rect: BoundingClientRect;
+  foo: string;
   gridBoundingClientRect: BoundingClientRect;
-  stopTween?: Function;
+  stopTween?: () => void;
 }
 
 export interface CachedPositionData {
@@ -45,7 +46,7 @@ export interface PopmotionEasing {
   anticipate: Easing;
 }
 
-export interface WrapGridArguments  {
+export interface WrapGridArguments {
   duration?: number;
   stagger?: number;
   easing?: keyof PopmotionEasing;

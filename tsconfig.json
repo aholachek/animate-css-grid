@@ -1,19 +1,15 @@
 {
   "compilerOptions": {
-    // Target latest version of ECMAScript.
-    "target": "esnext",
-    // Search under node_modules for non-relative imports.
+    "target": "es5",
+    "lib": ["es2015", "dom"],
     "moduleResolution": "node",
-    // Process & infer types from .js files.
     "allowJs":false,
     "outDir": "dist",
     "emitDeclarationOnly": true,
     "declaration": true,
-    // Enable strictest settings like strictNullChecks & noImplicitAny.
     "strict": true,
-    // Disallow features that require cross-file information for emit.
-    // Import non-ES modules as default imports.
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "noEmitOnError": true,
   },
   "include": ["src"]
 }

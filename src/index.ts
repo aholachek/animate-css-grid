@@ -1,19 +1,20 @@
-import throttle from 'lodash/throttle'
 import {
-  linear,
-  easeIn,
-  easeOut,
-  easeInOut,
-  circIn,
-  circOut,
-  circInOut,
-  backIn,
-  backOut,
-  backInOut,
   anticipate,
-} from '@popmotion/easing' ;
-import { tween } from 'popmotion';
+  backIn,
+  backInOut,
+  backOut,
+  circIn,
+  circInOut,
+  circOut,
+  easeIn,
+  easeInOut,
+  easeOut,
+  linear,
+} from '@popmotion/easing';
 import sync from 'framesync';
+// @ts-ignore
+import throttle from 'lodash/throttle';
+import { tween } from 'popmotion';
 import {
   BoundingClientRect,
   CachedPositionData,
@@ -22,23 +23,26 @@ import {
   ItemPosition,
   PopmotionEasing,
   WrapGridArguments,
-} from "./types";
+} from './types';
 
 const popmotionEasing: PopmotionEasing = {
-  linear,
-  easeIn,
-  easeOut,
-  easeInOut,
-  circIn,
-  circOut,
-  circInOut,
-  backIn,
-  backOut,
-  backInOut,
   anticipate,
-}
+  backIn,
+  backInOut,
+  backOut,
+  circIn,
+  circInOut,
+  circOut,
+  easeIn,
+  easeInOut,
+  easeOut,
+  linear,
+};
 
-const DATASET_KEY = "animateGridId";
+const DATASET_KEY = 'animateGridId';
+
+const toArray = (arrLike: ArrayLike<any>): any[] =>
+  Array.prototype.slice.call(arrLike);
 
 // in order to account for scroll, (which we're not listening for)
 // always cache the item's position relative
@@ -70,7 +74,7 @@ const applyCoordTransform = (
     translateX === 0 && translateY === 0 && scaleX === 1 && scaleY === 1;
   const styleEl = () => {
     el.style.transform = isFinished
-      ? ""
+      ? ''
       : `translateX(${translateX}px) translateY(${translateY}px) scaleX(${scaleX}) scaleY(${scaleY})`;
   };
   if (immediate) {
@@ -82,7 +86,7 @@ const applyCoordTransform = (
   if (firstChild) {
     const styleChild = () => {
       firstChild.style.transform = isFinished
-        ? ""
+        ? ''
         : `scaleX(${1 / scaleX}) scaleY(${1 / scaleY})`;
     };
     if (immediate) {
@@ -96,11 +100,10 @@ const applyCoordTransform = (
 // return a function that take a reference to a grid dom node and optional config
 export const wrapGrid = (
   container: HTMLElement,
-  { duration = 250, stagger = 0, easing = "easeInOut" }: WrapGridArguments = {},
+  { duration = 250, stagger = 0, easing = 'easeInOut' }: WrapGridArguments = {},
 ) => {
-
   if (!popmotionEasing[easing]) {
-    throw new Error(`${easing} is not a valid easing name`)
+    throw new Error(`${easing} is not a valid easing name`);
   }
 
   // all cached position data, and in-progress tween data, is stored here
@@ -110,34 +113,42 @@ export const wrapGrid = (
     elements: HTMLCollectionOf<HTMLElement> | HTMLElement[],
   ) => {
     const gridBoundingClientRect = container.getBoundingClientRect();
-    [...elements].forEach((el) => {
-      if (typeof el.getBoundingClientRect !== "function") {
+    toArray(elements).forEach((el) => {
+      if (typeof el.getBoundingClientRect !== 'function') {
         return;
       }
       if (!el.dataset[DATASET_KEY]) {
-        const animateGridId = `${Math.random()}`;
-        el.dataset[DATASET_KEY] = animateGridId;
-        cachedPositionData[animateGridId] = {} as ItemPosition
+        const newId = `${Math.random()}`;
+        el.dataset[DATASET_KEY] = newId;
+        cachedPositionData[newId] = {} as ItemPosition;
       }
       const animateGridId = el.dataset[DATASET_KEY] as string;
       const rect = getGridAwareBoundingClientRect(gridBoundingClientRect, el);
-      cachedPositionData[animateGridId].rect = rect
-      cachedPositionData[animateGridId].gridBoundingClientRect = gridBoundingClientRect
+      cachedPositionData[animateGridId].rect = rect;
+      cachedPositionData[
+        animateGridId
+      ].gridBoundingClientRect = gridBoundingClientRect;
     });
   };
   recordPositions(container.children as HTMLCollectionOf<HTMLElement>);
   const throttledResizeListener = throttle(() => {
+    const bodyElement = document.querySelector('body');
+    const containerIsNoLongerInPage =
+      bodyElement && !bodyElement.contains(container);
+    if (!container || containerIsNoLongerInPage) {
+      window.removeEventListener('resize', throttledResizeListener);
+    }
     recordPositions(container.children as HTMLCollectionOf<HTMLElement>);
   }, 250);
-  window.addEventListener("resize", throttledResizeListener);
+  window.addEventListener('resize', throttledResizeListener);
   const mutationCallback = (
-    mutationsList: MutationRecord[] | "forceGridAnimation",
+    mutationsList: MutationRecord[] | 'forceGridAnimation',
   ) => {
-    if (mutationsList !== "forceGridAnimation") {
+    if (mutationsList !== 'forceGridAnimation') {
       // check if we care about the mutation
       const relevantMutationHappened = mutationsList.filter(
         (m: MutationRecord) =>
-          m.attributeName === "class" ||
+          m.attributeName === 'class' ||
           m.addedNodes.length ||
           m.removedNodes.length,
       ).length;
@@ -146,27 +157,28 @@ export const wrapGrid = (
       }
     }
     const gridBoundingClientRect = container.getBoundingClientRect();
-    const childrenElements = [...container.children] as HTMLElement[];
+    const childrenElements = toArray(container.children) as HTMLElement[];
     // stop current transitions and remove transforms on transitioning elements
     childrenElements
       .filter((el) => {
-        const ItemPosition = cachedPositionData[el.dataset[DATASET_KEY] as string];
-        if (ItemPosition && ItemPosition.stopTween) {
-          ItemPosition.stopTween();
-          delete ItemPosition.stopTween;
+        const itemPosition =
+          cachedPositionData[el.dataset[DATASET_KEY] as string];
+        if (itemPosition && itemPosition.stopTween) {
+          itemPosition.stopTween();
+          delete itemPosition.stopTween;
           return true;
         }
       })
       .forEach((el) => {
-        el.style.transform = "";
+        el.style.transform = '';
         const firstChild = el.children[0] as HTMLElement;
         if (firstChild) {
-          firstChild.style.transform = "";
+          firstChild.style.transform = '';
         }
       });
     const animatedGridChildren = childrenElements
       .map((el) => ({
-        childCoords:  {} as ChildBoundingClientRect,
+        childCoords: {} as ChildBoundingClientRect,
         el,
         boundingClientRect: getGridAwareBoundingClientRect(
           gridBoundingClientRect,
@@ -174,17 +186,18 @@ export const wrapGrid = (
         ),
       }))
       .filter(({ el, boundingClientRect }) => {
-        const ItemPosition = cachedPositionData[el.dataset[DATASET_KEY] as string];
+        const itemPosition =
+          cachedPositionData[el.dataset[DATASET_KEY] as string];
         // don't animate the initial appearance of elements,
         // just cache their position so they can be animated later
-        if (!ItemPosition) {
+        if (!itemPosition) {
           recordPositions([el]);
           return false;
         } else if (
-          boundingClientRect.top === ItemPosition.rect.top &&
-          boundingClientRect.left === ItemPosition.rect.left &&
-          boundingClientRect.width === ItemPosition.rect.width &&
-          boundingClientRect.height === ItemPosition.rect.height
+          boundingClientRect.top === itemPosition.rect.top &&
+          boundingClientRect.left === itemPosition.rect.left &&
+          boundingClientRect.width === itemPosition.rect.width &&
+          boundingClientRect.height === itemPosition.rect.height
         ) {
           // if it hasn't moved, dont animate it
           return false;
@@ -194,9 +207,9 @@ export const wrapGrid = (
 
     // having more than one child in the animated item is not supported
     animatedGridChildren.forEach(({ el }) => {
-      if ([...el.children].length > 1) {
+      if (toArray(el.children).length > 1) {
         throw new Error(
-          "Make sure every grid item has a single container element surrounding its children",
+          'Make sure every grid item has a single container element surrounding its children',
         );
       }
     });
@@ -224,17 +237,18 @@ export const wrapGrid = (
           i,
         ) => {
           const firstChild = el.children[0] as HTMLElement;
-          const ItemPosition = cachedPositionData[el.dataset[DATASET_KEY] as string];
+          const itemPosition =
+            cachedPositionData[el.dataset[DATASET_KEY] as string];
           const coords: Coords = {
-            scaleX: ItemPosition.rect.width / width,
-            scaleY: ItemPosition.rect.height / height,
-            translateX: ItemPosition.rect.left - left,
-            translateY: ItemPosition.rect.top - top,
+            scaleX: itemPosition.rect.width / width,
+            scaleY: itemPosition.rect.height / height,
+            translateX: itemPosition.rect.left - left,
+            translateY: itemPosition.rect.top - top,
           };
 
-          el.style.transformOrigin = "0 0";
+          el.style.transformOrigin = '0 0';
           if (firstChild && childLeft === left && childTop === top) {
-            firstChild.style.transformOrigin = "0 0";
+            firstChild.style.transformOrigin = '0 0';
           }
 
           applyCoordTransform(el, coords, { immediate: true });
@@ -250,16 +264,16 @@ export const wrapGrid = (
               // this helps prevent layout thrashing
               sync.postRender(() => recordPositions([el]));
             });
-            ItemPosition.stopTween = stop;
+            itemPosition.stopTween = stop;
           };
 
-          if (typeof stagger !== "number") {
+          if (typeof stagger !== 'number') {
             startAnimation();
           } else {
             const timeoutId = setTimeout(() => {
               sync.update(startAnimation);
             }, stagger * i);
-            ItemPosition.stopTween = () => clearTimeout(timeoutId);
+            itemPosition.stopTween = () => clearTimeout(timeoutId);
           }
         },
       );
@@ -269,12 +283,12 @@ export const wrapGrid = (
     childList: true,
     attributes: true,
     subtree: true,
-    attributeFilter: ["class"],
+    attributeFilter: ['class'],
   });
   const unwrapGrid = () => {
-    window.removeEventListener("resize", throttledResizeListener);
+    window.removeEventListener('resize', throttledResizeListener);
     observer.disconnect();
   };
-  const forceGridAnimation = () => mutationCallback("forceGridAnimation");
+  const forceGridAnimation = () => mutationCallback('forceGridAnimation');
   return { unwrapGrid, forceGridAnimation };
 };
