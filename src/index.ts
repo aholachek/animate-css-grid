@@ -102,7 +102,13 @@ const applyCoordTransform = (
 // return a function that take a reference to a grid dom node and optional config
 export const wrapGrid = (
   container: HTMLElement,
-  { duration = 250, stagger = 0, easing = 'easeInOut' }: WrapGridArguments = {},
+  {
+    duration = 250,
+    stagger = 0,
+    easing = 'easeInOut',
+    onStart = () => {},
+    onEnd = () => {},
+  }: WrapGridArguments = {},
 ) => {
   if (!popmotionEasing[easing]) {
     throw new Error(`${easing} is not a valid easing name`);
@@ -133,6 +139,7 @@ export const wrapGrid = (
     });
   };
   recordPositions(container.children as HTMLCollectionOf<HTMLElement>);
+
   const throttledResizeListener = throttle(() => {
     const bodyElement = document.querySelector('body');
     const containerIsNoLongerInPage =
@@ -143,6 +150,7 @@ export const wrapGrid = (
     recordPositions(container.children as HTMLCollectionOf<HTMLElement>);
   }, 250);
   window.addEventListener('resize', throttledResizeListener);
+
   const mutationCallback = (
     mutationsList: MutationRecord[] | 'forceGridAnimation',
   ) => {
@@ -216,6 +224,15 @@ export const wrapGrid = (
       }
     });
 
+    if (!animatedGridChildren.length) {
+      return;
+    }
+
+    const animatedElements = animatedGridChildren.map(({ el }) => el);
+    onStart(animatedElements);
+
+    const completionPromises: Array<Promise<any>> = [];
+
     animatedGridChildren
       // do this measurement first so as not to cause layout thrashing
       .map(data => {
@@ -253,6 +270,14 @@ export const wrapGrid = (
             firstChild.style.transformOrigin = '0 0';
           }
 
+          let cachedResolve = () => {};
+
+          const completionPromise = new Promise(resolve => {
+            cachedResolve = resolve;
+          });
+
+          completionPromises.push(completionPromise);
+
           applyCoordTransform(el, coords, { immediate: true });
           // now start the animation
           const startAnimation = () => {
@@ -261,10 +286,13 @@ export const wrapGrid = (
               to: { translateX: 0, translateY: 0, scaleX: 1, scaleY: 1 },
               duration,
               ease: popmotionEasing[easing],
-            }).start((transforms: Coords) => {
-              applyCoordTransform(el, transforms);
-              // this helps prevent layout thrashing
-              sync.postRender(() => recordPositions([el]));
+            }).start({
+              update: (transforms: Coords) => {
+                applyCoordTransform(el, transforms);
+                // this helps prevent layout thrashing
+                sync.postRender(() => recordPositions([el]));
+              },
+              complete: cachedResolve,
             });
             itemPosition.stopTween = stop;
           };
@@ -279,7 +307,12 @@ export const wrapGrid = (
           }
         },
       );
+
+    Promise.all(completionPromises).then(() => {
+      onEnd(animatedElements);
+    });
   };
+
   const observer = new MutationObserver(mutationCallback);
   observer.observe(container, {
     childList: true,

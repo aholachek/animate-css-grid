@@ -63,7 +63,12 @@ Optional config object:
   // int: default is 250 ms
   duration: 500
   // string: default is 'easeInOut'
-  easing: 'backInOut'
+  easing: 'backInOut',
+  // function: called with list of elements about to animate
+  onStart: (animatingElementList)=> {},
+  // function: called with list of elements that just finished animating
+  // cancelled animations will not trigger onEnd
+  onEnd: (animatingElementList)=> {}
 }
 ```
 
