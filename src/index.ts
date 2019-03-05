@@ -108,6 +108,7 @@ export const wrapGrid = (
     easing = 'easeInOut',
     onStart = () => {},
     onEnd = () => {},
+    watchScroll = false,
   }: WrapGridArguments = {},
 ) => {
   if (!popmotionEasing[easing]) {
@@ -140,16 +141,29 @@ export const wrapGrid = (
   };
   recordPositions(container.children as HTMLCollectionOf<HTMLElement>);
 
-  const throttledResizeListener = throttle(() => {
-    const bodyElement = document.querySelector('body');
-    const containerIsNoLongerInPage =
-      bodyElement && !bodyElement.contains(container);
-    if (!container || containerIsNoLongerInPage) {
-      window.removeEventListener('resize', throttledResizeListener);
-    }
-    recordPositions(container.children as HTMLCollectionOf<HTMLElement>);
-  }, 250);
-  window.addEventListener('resize', throttledResizeListener);
+  const createMutationListener = (
+    eventType: string,
+    throttleDuration: number,
+  ) => {
+    const throttledListener = throttle(() => {
+      const bodyElement = document.querySelector('body');
+      const containerIsNoLongerInPage =
+        bodyElement && !bodyElement.contains(container);
+      if (!container || containerIsNoLongerInPage) {
+        window.removeEventListener(eventType, throttledListener);
+      }
+      recordPositions(container.children as HTMLCollectionOf<HTMLElement>);
+    }, throttleDuration);
+    return throttledListener;
+  };
+
+  const resizeListener = createMutationListener('resize', 250);
+  window.addEventListener('resize', resizeListener);
+
+  const scrollListener = createMutationListener('scroll', 20);
+  if (watchScroll) {
+    window.addEventListener('scroll', scrollListener);
+  }
 
   const mutationCallback = (
     mutationsList: MutationRecord[] | 'forceGridAnimation',
@@ -321,7 +335,10 @@ export const wrapGrid = (
     attributeFilter: ['class'],
   });
   const unwrapGrid = () => {
-    window.removeEventListener('resize', throttledResizeListener);
+    window.removeEventListener('resize', resizeListener);
+    if (watchScroll) {
+      window.removeEventListener('scroll', scrollListener);
+    }
     observer.disconnect();
   };
   const forceGridAnimation = () => mutationCallback('forceGridAnimation');
