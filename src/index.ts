@@ -141,28 +141,22 @@ export const wrapGrid = (
   };
   recordPositions(container.children as HTMLCollectionOf<HTMLElement>);
 
-  const createMutationListener = (
-    eventType: string,
-    throttleDuration: number,
-  ) => {
-    const throttledListener = throttle(() => {
-      const bodyElement = document.querySelector('body');
-      const containerIsNoLongerInPage =
-        bodyElement && !bodyElement.contains(container);
-      if (!container || containerIsNoLongerInPage) {
-        window.removeEventListener(eventType, throttledListener);
-      }
-      recordPositions(container.children as HTMLCollectionOf<HTMLElement>);
-    }, throttleDuration);
-    return throttledListener;
-  };
+  const throttledResizeListener = throttle(() => {
+    const bodyElement = document.querySelector('body');
+    const containerIsNoLongerInPage =
+      bodyElement && !bodyElement.contains(container);
+    if (!container || containerIsNoLongerInPage) {
+      window.removeEventListener('resize', throttledResizeListener);
+    }
+    recordPositions(container.children as HTMLCollectionOf<HTMLElement>);
+  }, 250);
+  window.addEventListener('resize', throttledResizeListener);
 
-  const resizeListener = createMutationListener('resize', 250);
-  window.addEventListener('resize', resizeListener);
-
-  const scrollListener = createMutationListener('scroll', 20);
+  const throttledScrollListener = throttle(() => {
+    recordPositions(container.children as HTMLCollectionOf<HTMLElement>);
+  }, 20);
   if (watchScroll) {
-    window.addEventListener('scroll', scrollListener);
+    container.addEventListener('scroll', throttledScrollListener);
   }
 
   const mutationCallback = (
@@ -335,9 +329,9 @@ export const wrapGrid = (
     attributeFilter: ['class'],
   });
   const unwrapGrid = () => {
-    window.removeEventListener('resize', resizeListener);
+    window.removeEventListener('resize', throttledResizeListener);
     if (watchScroll) {
-      window.removeEventListener('scroll', scrollListener);
+      container.removeEventListener('scroll', throttledScrollListener);
     }
     observer.disconnect();
   };

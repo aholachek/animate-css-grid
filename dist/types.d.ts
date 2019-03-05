@@ -42,4 +42,7 @@ export interface WrapGridArguments {
     duration?: number;
     stagger?: number;
     easing?: keyof PopmotionEasing;
+    onStart?: (animatedChildren: HTMLElement[]) => void;
+    onEnd?: (animatedChildren: HTMLElement[]) => void;
+    watchScroll?: boolean;
 }
