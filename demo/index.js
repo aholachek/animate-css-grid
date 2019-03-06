@@ -37,7 +37,7 @@ const { unwrapGrid } = wrapGrid(grid, {
   easing: 'backOut',
   onStart: els => console.log('onstart', els),
   onEnd: els => console.log('onend', els),
-  watchScroll: true,
+  containerScroll: true,
 });
 
 document
@@ -166,3 +166,19 @@ hiddenCardGrid.addEventListener('click', ev => {
 });
 
 wrapGrid(hiddenCardGrid, { stagger: 20, easing: 'backOut', duration: 10000 });
+
+// scroll test
+
+const scrollTest = document.querySelector('.scroll-example');
+scrollTest.addEventListener('click', () => {
+  const children = scrollTest.children;
+  const reversed = [...children].reverse();
+  scrollTest.innerHTML = '';
+  reversed.forEach(c => {
+    scrollTest.appendChild(c);
+  });
+});
+wrapGrid(scrollTest, {
+  duration: 2000,
+  containerScroll: true,
+});

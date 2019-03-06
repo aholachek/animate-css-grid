@@ -17,7 +17,7 @@
 /* styling */
 
 .card--hidden {
-  display:none !important;
+  display: none !important;
 }
 
 .card--expanded {
@@ -183,12 +183,25 @@ button {
    nested grid
    ========================================================================== */
 
-   .nested-grid {
-     display:grid;
-     grid-auto-flow: dense;
-     grid-gap: .5rem;
-     grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-     grid-template-rows: repeat(auto-fit, minmax(2rem, 1fr));
-   }
+.nested-grid {
+  display: grid;
+  grid-auto-flow: dense;
+  grid-gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(2rem, 1fr));
+}
 
+.scroll-example {
+  width: 500px;
+  overflow-x: scroll;
+  display: flex;
+}
 
+.scroll-example div {
+  margin-right: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 8rem;
+  flex: 0 0 100px;
+}

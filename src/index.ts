@@ -108,7 +108,6 @@ export const wrapGrid = (
     easing = 'easeInOut',
     onStart = () => {},
     onEnd = () => {},
-    watchScroll = false,
   }: WrapGridArguments = {},
 ) => {
   if (!popmotionEasing[easing]) {
@@ -155,9 +154,7 @@ export const wrapGrid = (
   const throttledScrollListener = throttle(() => {
     recordPositions(container.children as HTMLCollectionOf<HTMLElement>);
   }, 20);
-  if (watchScroll) {
-    container.addEventListener('scroll', throttledScrollListener);
-  }
+  container.addEventListener('scroll', throttledScrollListener);
 
   const mutationCallback = (
     mutationsList: MutationRecord[] | 'forceGridAnimation',
@@ -330,9 +327,7 @@ export const wrapGrid = (
   });
   const unwrapGrid = () => {
     window.removeEventListener('resize', throttledResizeListener);
-    if (watchScroll) {
-      container.removeEventListener('scroll', throttledScrollListener);
-    }
+    container.removeEventListener('scroll', throttledScrollListener);
     observer.disconnect();
   };
   const forceGridAnimation = () => mutationCallback('forceGridAnimation');
