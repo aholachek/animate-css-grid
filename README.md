@@ -22,7 +22,11 @@ Seamlessly animate all CSS grid properties, including:
 </a>
 
 
+#### [Fork Photo Grid Example on CodeSandbox](https://codesandbox.io/s/bold-field-j8mss)
+(Uses ES2015 imports)
+
 #### [Fork Photo Grid Example on Codepen](https://codepen.io/aholachek/pen/VXjOPB)
+(Uses a script tag)
 
 This script makes it easy to transition your CSS grid gracefully from one state to another.
 If the content of the grid changes, or if the grid or one of its children is updated with the addition or removal of a class, the grid will automatically transition to its new configuration.
@@ -37,7 +41,7 @@ ES6 Module:
 `yarn add animate-css-grid` or `npm install animate-css-grid`
 
 ```js
-import { wrapGrid } from animateCSSGrid
+import { wrapGrid } from 'animate-css-grid'
 
 const grid = document.querySelector(".grid");
 wrapGrid(grid);
