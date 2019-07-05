@@ -33,11 +33,19 @@ grid.addEventListener('click', ev => {
   }
 });
 
+const { uwg } = wrapGrid(grid, {
+  easing: 'backOut',
+  onStart: els => console.log('onstart', els),
+  onEnd: els => console.log('onend', els),
+});
+
+uwg();
+console.log('unwrapped');
+
 const { unwrapGrid } = wrapGrid(grid, {
   easing: 'backOut',
   onStart: els => console.log('onstart', els),
   onEnd: els => console.log('onend', els),
-  containerScroll: true,
 });
 
 document
@@ -180,5 +188,4 @@ scrollTest.addEventListener('click', () => {
 });
 wrapGrid(scrollTest, {
   duration: 2000,
-  containerScroll: true,
 });

@@ -44,5 +44,4 @@ export interface WrapGridArguments {
     easing?: keyof PopmotionEasing;
     onStart?: (animatedChildren: HTMLElement[]) => void;
     onEnd?: (animatedChildren: HTMLElement[]) => void;
-    containerScroll?: boolean;
 }

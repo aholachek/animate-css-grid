@@ -128,9 +128,13 @@ export const wrapGrid = (
       if (!el.dataset[DATASET_KEY]) {
         const newId = `${Math.random()}`;
         el.dataset[DATASET_KEY] = newId;
-        cachedPositionData[newId] = {} as ItemPosition;
       }
       const animateGridId = el.dataset[DATASET_KEY] as string;
+
+      if (!cachedPositionData[animateGridId]) {
+        cachedPositionData[animateGridId] = {} as ItemPosition;
+      }
+
       const rect = getGridAwareBoundingClientRect(gridBoundingClientRect, el);
       cachedPositionData[animateGridId].rect = rect;
       cachedPositionData[
