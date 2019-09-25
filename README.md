@@ -127,7 +127,8 @@ It uses the FLIP animation technique to smoothly update the grid, applying a cou
 
 It should work on container elements without CSS grid applied as well, but was developed and tested with CSS grid in mind.
 
-## Usage with Frameworks like React
+## Usage with Frameworks
 
-The `animate-css-grid` library can easily be used with frameworks like React.
-[Check out an example on Codepen.](https://codepen.io/aholachek/pen/mxwvmV)
+The `animate-css-grid` library can easily be used with frameworks like React or Vue.
+
+Check out the [React example](https://codepen.io/aholachek/pen/mxwvmV) or the [Vue example](https://codepen.io/sustained/pen/Rwbdgob) on Codepen!
