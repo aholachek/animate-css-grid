@@ -205,3 +205,11 @@ button {
   height: 8rem;
   flex: 0 0 100px;
 }
+
+.small {
+  background-color: orange;
+}
+
+.big {
+  background-color: blue;
+}

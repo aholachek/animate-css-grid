@@ -23,7 +23,6 @@ export interface ChildBoundingClientRect {
 
 export interface ItemPosition {
   rect: BoundingClientRect;
-  foo: string;
   gridBoundingClientRect: BoundingClientRect;
   stopTween?: () => void;
 }

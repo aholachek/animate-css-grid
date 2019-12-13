@@ -51,7 +51,7 @@ const toArray = (arrLike: ArrayLike<any>): any[] => {
 // to the top and left of the grid container
 const getGridAwareBoundingClientRect = (
   gridBoundingClientRect: BoundingClientRect,
-  el: HTMLElement,
+  el: HTMLElement
 ): BoundingClientRect => {
   const { top, left, width, height } = el.getBoundingClientRect();
   const rect = { top, left, width, height };
@@ -70,7 +70,7 @@ const getGridAwareBoundingClientRect = (
 const applyCoordTransform = (
   el: HTMLElement,
   { translateX, translateY, scaleX, scaleY }: Coords,
-  { immediate }: { immediate?: boolean } = {},
+  { immediate }: { immediate?: boolean } = {}
 ): void => {
   const isFinished =
     translateX === 0 && translateY === 0 && scaleX === 1 && scaleY === 1;
@@ -108,17 +108,27 @@ export const wrapGrid = (
     easing = 'easeInOut',
     onStart = () => {},
     onEnd = () => {},
-  }: WrapGridArguments = {},
+  }: WrapGridArguments = {}
 ) => {
   if (!popmotionEasing[easing]) {
     throw new Error(`${easing} is not a valid easing name`);
   }
 
+  let mutationsDisabled: boolean = false;
+
+  const disableMutationsWhileFunctionRuns = (func: () => void) => {
+    mutationsDisabled = true;
+    func();
+    setTimeout(() => {
+      mutationsDisabled = false;
+    }, 0);
+  };
+
   // all cached position data, and in-progress tween data, is stored here
   const cachedPositionData: CachedPositionData = {};
   // initially and after every transition, record element positions
   const recordPositions = (
-    elements: HTMLCollectionOf<HTMLElement> | HTMLElement[],
+    elements: HTMLCollectionOf<HTMLElement> | HTMLElement[]
   ) => {
     const gridBoundingClientRect = container.getBoundingClientRect();
     toArray(elements).forEach(el => {
@@ -161,7 +171,7 @@ export const wrapGrid = (
   container.addEventListener('scroll', throttledScrollListener);
 
   const mutationCallback = (
-    mutationsList: MutationRecord[] | 'forceGridAnimation',
+    mutationsList: MutationRecord[] | 'forceGridAnimation'
   ) => {
     if (mutationsList !== 'forceGridAnimation') {
       // check if we care about the mutation
@@ -169,11 +179,12 @@ export const wrapGrid = (
         (m: MutationRecord) =>
           m.attributeName === 'class' ||
           m.addedNodes.length ||
-          m.removedNodes.length,
+          m.removedNodes.length
       ).length;
       if (!relevantMutationHappened) {
         return;
       }
+      if (mutationsDisabled) return;
     }
     const gridBoundingClientRect = container.getBoundingClientRect();
     const childrenElements = toArray(container.children) as HTMLElement[];
@@ -201,7 +212,7 @@ export const wrapGrid = (
         el,
         boundingClientRect: getGridAwareBoundingClientRect(
           gridBoundingClientRect,
-          el,
+          el
         ),
       }))
       .filter(({ el, boundingClientRect }) => {
@@ -228,7 +239,7 @@ export const wrapGrid = (
     animatedGridChildren.forEach(({ el }) => {
       if (toArray(el.children).length > 1) {
         throw new Error(
-          'Make sure every grid item has a single container element surrounding its children',
+          'Make sure every grid item has a single container element surrounding its children'
         );
       }
     });
@@ -238,7 +249,7 @@ export const wrapGrid = (
     }
 
     const animatedElements = animatedGridChildren.map(({ el }) => el);
-    onStart(animatedElements);
+    disableMutationsWhileFunctionRuns(() => onStart(animatedElements));
 
     const completionPromises: Array<Promise<any>> = [];
 
@@ -250,7 +261,7 @@ export const wrapGrid = (
         if (firstChild) {
           data.childCoords = getGridAwareBoundingClientRect(
             gridBoundingClientRect,
-            firstChild,
+            firstChild
           );
         }
         return data;
@@ -262,7 +273,7 @@ export const wrapGrid = (
             boundingClientRect: { top, left, width, height },
             childCoords: { top: childTop, left: childLeft },
           },
-          i,
+          i
         ) => {
           const firstChild = el.children[0] as HTMLElement;
           const itemPosition =
@@ -314,11 +325,11 @@ export const wrapGrid = (
             }, stagger * i);
             itemPosition.stopTween = () => clearTimeout(timeoutId);
           }
-        },
+        }
       );
 
     Promise.all(completionPromises).then(() => {
-      onEnd(animatedElements);
+      disableMutationsWhileFunctionRuns(() => onEnd(animatedElements));
     });
   };
 

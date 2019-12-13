@@ -33,10 +33,14 @@ grid.addEventListener('click', ev => {
   }
 });
 
-const { uwg } = wrapGrid(grid, {
+const { unwrapGrid: uwg } = wrapGrid(grid, {
   easing: 'backOut',
-  onStart: els => console.log('onstart', els),
-  onEnd: els => console.log('onend', els),
+  onStart: els =>
+    els.forEach(el => {
+      console.log('foo');
+      el.classList.add('big');
+    }),
+  onEnd: els => els.forEach(el => el.classList.add('small')),
 });
 
 uwg();
@@ -44,8 +48,12 @@ console.log('unwrapped');
 
 const { unwrapGrid } = wrapGrid(grid, {
   easing: 'backOut',
-  onStart: els => console.log('onstart', els),
-  onEnd: els => console.log('onend', els),
+  onStart: els =>
+  els.forEach(el => {
+    console.log('foo');
+    el.classList.add('big');
+  }),
+onEnd: els => els.forEach(el => el.classList.add('small')),
 });
 
 document
