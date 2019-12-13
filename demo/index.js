@@ -50,10 +50,13 @@ const { unwrapGrid } = wrapGrid(grid, {
   easing: 'backOut',
   onStart: els =>
   els.forEach(el => {
-    console.log('foo');
+    console.log('onstart');
     el.classList.add('big');
   }),
-onEnd: els => els.forEach(el => el.classList.add('small')),
+  onEnd: els => {
+    els.forEach(el => el.classList.add('small'));
+    console.log('onend');
+  },
 });
 
 document

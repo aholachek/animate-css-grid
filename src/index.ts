@@ -329,7 +329,7 @@ export const wrapGrid = (
       );
 
     Promise.all(completionPromises).then(() => {
-      disableMutationsWhileFunctionRuns(() => onEnd(animatedElements));
+      onEnd(animatedElements);
     });
   };
 
