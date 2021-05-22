@@ -69,7 +69,7 @@ const getGridAwareBoundingClientRect = (
 // the function used during the tweening
 const applyCoordTransform = (
   el: HTMLElement,
-  { translateX, translateY, scaleX, scaleY }: Coords,
+  { translateX, translateY, scaleX, scaleY, innerWidth, innerHeight }: Coords,
   { immediate }: { immediate?: boolean } = {}
 ): void => {
   const isFinished =
@@ -87,9 +87,15 @@ const applyCoordTransform = (
   const firstChild = el.children[0] as HTMLElement;
   if (firstChild) {
     const styleChild = () => {
-      firstChild.style.transform = isFinished
-        ? ''
-        : `scaleX(${1 / scaleX}) scaleY(${1 / scaleY})`;
+      if (isFinished) {
+        firstChild.style.transform = "";
+        firstChild.style.width = "";
+        firstChild.style.height = "";
+      } else {
+        firstChild.style.transform = `scaleX(${1 / scaleX}) scaleY(${1 / scaleY})`;
+        firstChild.style.width = `${innerWidth}px`;
+        firstChild.style.height = `${innerHeight}px`;
+      }
     };
     if (immediate) {
       styleChild();
@@ -150,6 +156,10 @@ export const wrapGrid = (
       cachedPositionData[
         animateGridId
       ].gridBoundingClientRect = gridBoundingClientRect;
+      const firstChild = el.children[0] as HTMLElement;
+      if (firstChild) {
+        cachedPositionData[animateGridId].innerRect = firstChild.getBoundingClientRect()
+      }
     });
   };
   recordPositions(container.children as HTMLCollectionOf<HTMLElement>);
@@ -278,12 +288,35 @@ export const wrapGrid = (
           const firstChild = el.children[0] as HTMLElement;
           const itemPosition =
             cachedPositionData[el.dataset[DATASET_KEY] as string];
-          const coords: Coords = {
+          // console.log("animated grid", width, height, left, top);
+          let coords: Coords = {
             scaleX: itemPosition.rect.width / width,
             scaleY: itemPosition.rect.height / height,
             translateX: itemPosition.rect.left - left,
             translateY: itemPosition.rect.top - top,
+            // innerX: (width - itemPosition.rect.width) / 2,
+            // // innerY: (height - itemPosition.rect.height) / 2,
+            // innerY: 0
           };
+
+          let target = {
+            translateX: 0,
+            translateY: 0,
+            scaleX: 1,
+            scaleY: 1,
+            // innerX: 0,
+            // innerY: 0
+          }
+
+          if (firstChild) {
+            let childDims: DOMRect;
+            childDims = firstChild.getBoundingClientRect();
+            // console.log("has child", childDims.height, childDims.width);
+            coords.innerWidth = itemPosition.innerRect.width;
+            coords.innerHeight = itemPosition.innerRect.height;
+            target.innerWidth = childDims.width;
+            target.innerHeight = childDims.height;
+          }
 
           el.style.transformOrigin = '0 0';
           if (firstChild && childLeft === left && childTop === top) {
@@ -303,7 +336,7 @@ export const wrapGrid = (
           const startAnimation = () => {
             const { stop } = tween({
               from: coords,
-              to: { translateX: 0, translateY: 0, scaleX: 1, scaleY: 1 },
+              to: target,
               duration,
               ease: popmotionEasing[easing],
             }).start({
