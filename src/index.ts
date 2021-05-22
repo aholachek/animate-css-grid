@@ -314,8 +314,8 @@ export const wrapGrid = (
             // console.log("has child", childDims.height, childDims.width);
             coords.innerWidth = itemPosition.innerRect.width;
             coords.innerHeight = itemPosition.innerRect.height;
-            target.innerWidth = childDims.width;
-            target.innerHeight = childDims.height;
+            target.innerWidth = width;
+            target.innerHeight = height;
           }
 
           el.style.transformOrigin = '0 0';
