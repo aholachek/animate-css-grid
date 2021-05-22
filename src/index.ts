@@ -288,7 +288,6 @@ export const wrapGrid = (
           const firstChild = el.children[0] as HTMLElement;
           const itemPosition =
             cachedPositionData[el.dataset[DATASET_KEY] as string];
-          // console.log("animated grid", width, height, left, top);
           let coords: Coords = {
             scaleX: itemPosition.rect.width / width,
             scaleY: itemPosition.rect.height / height,
@@ -311,7 +310,6 @@ export const wrapGrid = (
           if (firstChild) {
             let childDims: DOMRect;
             childDims = firstChild.getBoundingClientRect();
-            // console.log("has child", childDims.height, childDims.width);
             coords.innerWidth = itemPosition.innerRect.width;
             coords.innerHeight = itemPosition.innerRect.height;
             target.innerWidth = width;

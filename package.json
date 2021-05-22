@@ -17,6 +17,7 @@
   "scripts": {
     "prepublishOnly": "yarn run build",
     "build": "webpack --mode production",
+    "dev-build": "webpack --mode development",
     "dev": "./node_modules/.bin/webpack-dev-server --mode development --config demo/webpack.config.js",
     "check-types": "tsc",
     "preversion": "npm run check-types"
