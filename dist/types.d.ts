@@ -4,6 +4,8 @@ export interface Coords {
     translateY: number;
     scaleX: number;
     scaleY: number;
+    innerHeight: number;
+    innerWidth: number;
     [key: string]: number;
 }
 export interface BoundingClientRect {
@@ -18,6 +20,7 @@ export interface ChildBoundingClientRect {
 }
 export interface ItemPosition {
     rect: BoundingClientRect;
+    innerRect: BoundingClientRect;
     gridBoundingClientRect: BoundingClientRect;
     stopTween?: () => void;
 }
