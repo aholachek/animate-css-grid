@@ -62,7 +62,7 @@ Optional config object:
   // int: default is 0 ms
   stagger: 100,
   // int: default is 250 ms
-  duration: 500
+  duration: 500,
   // string: default is 'easeInOut'
   easing: 'backInOut',
   // function: called with list of elements about to animate
