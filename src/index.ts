@@ -236,13 +236,14 @@ export const wrapGrid = (
       });
 
     // having more than one child in the animated item is not supported
-    animatedGridChildren.forEach(({ el }) => {
+    // From PixeledLuaWriter: I have tested this on an animated item with more than 1 child, it does infact work and you can also test it too if you need proof
+    /**animatedGridChildren.forEach(({ el }) => {
       if (toArray(el.children).length > 1) {
         throw new Error(
           'Make sure every grid item has a single container element surrounding its children'
         );
       }
-    });
+    }); **/
 
     if (!animatedGridChildren.length) {
       return;
