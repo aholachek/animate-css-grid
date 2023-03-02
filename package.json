@@ -1,13 +1,13 @@
 {
   "name": "animate-css-grid",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "source": "src/index.ts",
   "main": "dist/main.js",
   "module": "dist/main.module.js",
   "types": "dist/index.d.ts",
   "description": "Buttery smooth, easy transitions for CSS grid",
   "homepage": "https://github.com/aholachek/animate-css-grid",
-   "files": [
+  "files": [
     "/dist"
   ],
   "keywords": [
