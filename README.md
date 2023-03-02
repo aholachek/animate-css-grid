@@ -27,7 +27,7 @@ Performantly animate all CSS grid properties, including:
 
 ## Why use animate-css-grid?
 
-This library uses transforms to transition between different layout states, which means, in comparison to pure [CSS grid animations](https://web.dev/css-animated-grid-layouts/), it offers:
+This library uses transforms to transition between different layout states, which means, in comparison to [CSS animations](https://web.dev/css-animated-grid-layouts/), it offers:
 
 - better performance 
 - more flexibility in terms of what properties can be animated
