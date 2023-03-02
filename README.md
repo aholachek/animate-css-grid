@@ -25,7 +25,7 @@ Performantly animate all CSS grid properties, including:
 #### [Fork Photo Grid Example on CodeSandbox](https://codesandbox.io/s/animate-css-grid-template-t6qsf)
 
 
-### Why use animate-css-grid?
+## Why use animate-css-grid?
 
 This library uses transforms to transition between different layout states, which means, in comparison to pure [CSS grid animations](https://web.dev/css-animated-grid-layouts/), it offers:
 
