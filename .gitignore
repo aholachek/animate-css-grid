@@ -6,3 +6,4 @@ src/*.js
 .rpt2_cache
 dist
 .parcel-cache
+demo/dist/*
