@@ -1,6 +1,6 @@
 {
   "name": "animate-css-grid",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "source": "src/index.ts",
   "main": "dist/main.js",
   "module": "dist/main.module.js",
