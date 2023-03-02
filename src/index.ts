@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import {
   anticipate,
   backIn,
@@ -12,8 +13,7 @@ import {
   linear,
 } from '@popmotion/easing';
 import sync from 'framesync';
-// @ts-ignore
-import throttle from 'lodash/throttle';
+import throttle from 'lodash.throttle';
 import { tween } from 'popmotion';
 import {
   BoundingClientRect,
@@ -40,11 +40,6 @@ const popmotionEasing: PopmotionEasing = {
 };
 
 const DATASET_KEY = 'animateGridId';
-
-const toArray = (arrLike: ArrayLike<any>): any[] => {
-  if (!arrLike) return [];
-  return Array.prototype.slice.call(arrLike);
-};
 
 // in order to account for scroll, (which we're not listening for)
 // always cache the item's position relative
@@ -106,15 +101,15 @@ export const wrapGrid = (
     duration = 250,
     stagger = 0,
     easing = 'easeInOut',
-    onStart = () => {},
-    onEnd = () => {},
+    onStart = () => { },
+    onEnd = () => { },
   }: WrapGridArguments = {}
 ) => {
   if (!popmotionEasing[easing]) {
     throw new Error(`${easing} is not a valid easing name`);
   }
 
-  let mutationsDisabled: boolean = false;
+  let mutationsDisabled = false;
 
   const disableMutationsWhileFunctionRuns = (func: () => void) => {
     mutationsDisabled = true;
@@ -131,7 +126,7 @@ export const wrapGrid = (
     elements: HTMLCollectionOf<HTMLElement> | HTMLElement[]
   ) => {
     const gridBoundingClientRect = container.getBoundingClientRect();
-    toArray(elements).forEach(el => {
+    Array.from(elements).forEach(el => {
       if (typeof el.getBoundingClientRect !== 'function') {
         return;
       }
@@ -187,7 +182,7 @@ export const wrapGrid = (
       if (mutationsDisabled) return;
     }
     const gridBoundingClientRect = container.getBoundingClientRect();
-    const childrenElements = toArray(container.children) as HTMLElement[];
+    const childrenElements = Array.from(container.children) as HTMLElement[];
     // stop current transitions and remove transforms on transitioning elements
     childrenElements
       .filter(el => {
@@ -237,7 +232,7 @@ export const wrapGrid = (
 
     // having more than one child in the animated item is not supported
     animatedGridChildren.forEach(({ el }) => {
-      if (toArray(el.children).length > 1) {
+      if (Array.from(el.children).length > 1) {
         throw new Error(
           'Make sure every grid item has a single container element surrounding its children'
         );
@@ -251,7 +246,7 @@ export const wrapGrid = (
     const animatedElements = animatedGridChildren.map(({ el }) => el);
     disableMutationsWhileFunctionRuns(() => onStart(animatedElements));
 
-    const completionPromises: Array<Promise<any>> = [];
+    const completionPromises: Array<Promise<unknown>> = [];
 
     animatedGridChildren
       // do this measurement first so as not to cause layout thrashing
@@ -290,10 +285,10 @@ export const wrapGrid = (
             firstChild.style.transformOrigin = '0 0';
           }
 
-          let cachedResolve = () => {};
+          let cachedResolve: () => void;
 
           const completionPromise = new Promise(resolve => {
-            cachedResolve = resolve;
+            cachedResolve = resolve as () => void;
           });
 
           completionPromises.push(completionPromise);

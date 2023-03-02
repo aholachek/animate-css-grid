@@ -1,0 +1,203 @@
+.grid {
+  grid-gap: 1rem;
+  grid-template-rows: minmax(15rem, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  grid-auto-rows: 1fr;
+  grid-auto-flow: dense;
+  display: grid;
+}
+
+.grid--full {
+  grid-template-rows: minmax(19rem, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+
+.card--hidden {
+  display: none !important;
+}
+
+.card--expanded {
+  grid-area: span 2 / span 2;
+}
+
+.card {
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  display: flex;
+  overflow: hidden;
+}
+
+.card > div {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.card__avatar {
+  height: 6rem;
+  width: 6rem;
+  background-color: #0003;
+  border-radius: 100%;
+  margin-bottom: 1rem;
+}
+
+.card__title {
+  height: 1rem;
+  width: 7rem;
+  background-color: #0009;
+  margin-bottom: 1rem;
+}
+
+.card__description {
+  height: 2rem;
+  width: 11rem;
+  background-color: #0003;
+}
+
+.card--1 {
+  background-color: #366f6e;
+}
+
+.card--2 {
+  background-color: #79ac91;
+}
+
+.card--3 {
+  background-color: #e2b060;
+}
+
+.card--4 {
+  background-color: #e86448;
+}
+
+.card--5 {
+  background-color: #dc5263;
+}
+
+body {
+  color: #d3d3d3;
+  min-height: 200vh;
+  background-color: #191919;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+button {
+  padding: .5rem;
+}
+
+.subjects {
+  height: 100vh;
+  grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+  margin-top: 5rem;
+  display: grid;
+}
+
+.subject {
+  color: #191919;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.subject__content {
+  display: none;
+}
+
+.subject:first-of-type {
+  background-color: #366f6e;
+}
+
+.subject:nth-of-type(2) {
+  background-color: #79ac91;
+}
+
+.subject:nth-of-type(3) {
+  background-color: #e2b060;
+}
+
+.subject:nth-of-type(4) {
+  background-color: #e86448;
+}
+
+.subject:nth-of-type(5) {
+  background-color: #dc5263;
+}
+
+.subject--active {
+  grid-column-end: span 3;
+}
+
+.subject--active .subject__content {
+  display: block;
+}
+
+.grid-children-change {
+  grid-gap: 1rem;
+  grid-template-columns: repeat(3, minmax(min-content, 200px));
+  grid-auto-rows: fit-content(600px);
+  grid-auto-flow: dense;
+  justify-content: center;
+  display: grid;
+}
+
+.card__inner {
+  background-color: #0009;
+}
+
+.card__inner--1 {
+  width: 50px;
+  height: 120px;
+}
+
+.card__inner--2 {
+  width: 130px;
+  height: 10px;
+}
+
+.card__inner--3 {
+  width: 220px;
+  height: 80px;
+}
+
+.nested-grid {
+  grid-auto-flow: dense;
+  grid-gap: .5rem;
+  grid-template-rows: repeat(auto-fit, minmax(2rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  display: grid;
+}
+
+.scroll-example {
+  width: 500px;
+  display: flex;
+  overflow-x: scroll;
+}
+
+.scroll-example div {
+  height: 8rem;
+  flex: 0 0 100px;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
+  display: flex;
+}
+
+.small {
+  background-color: orange;
+}
+
+.big {
+  background-color: #00f;
+}
+
+/*# sourceMappingURL=index.1b982baf.css.map */

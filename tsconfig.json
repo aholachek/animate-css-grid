@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
+    "module": "ESNext",
     "target": "es5",
     "lib": ["es2015", "dom"],
     "moduleResolution": "node",
-    "allowJs":false,
+    "allowJs": false,
     "outDir": "dist",
     "emitDeclarationOnly": true,
     "declaration": true,

@@ -4,3 +4,5 @@ node_modules
 .vscode
 src/*.js
 .rpt2_cache
+dist
+.parcel-cache
