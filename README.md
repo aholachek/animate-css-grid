@@ -1,6 +1,6 @@
 # Animate CSS Grid
 
-Seamlessly animate all CSS grid properties, including:
+Performantly animate all CSS grid properties, including:
 
 ### `grid-column` and `grid-row`
 
@@ -22,11 +22,18 @@ Seamlessly animate all CSS grid properties, including:
 </a>
 
 
-- #### [Fork Photo Grid Example on CodeSandbox (uses ES2015 imports)](https://codesandbox.io/s/animate-css-grid-template-t6qsf)
-- #### [Fork Photo Grid Example on Codepen (uses script tags)](https://codepen.io/aholachek/pen/VXjOPB)
+- #### [Fork Photo Grid Example on CodeSandbox](https://codesandbox.io/s/animate-css-grid-template-t6qsf)
 
-This script makes it easy to transition your CSS grid gracefully from one state to another.
-If the content of the grid changes, or if the grid or one of its children is updated with the addition or removal of a class, the grid will automatically transition to its new configuration.
+
+### Why use animate-css-grid?
+
+This library uses hardware accelerated transforms to transition between different layout states, which means, in comparison to pure CSS grid animations, it offers:
+
+- better performance 
+- more flexibility in terms of what properties can be animated
+- more configurable animations (easing options, staggers)
+
+Want to have a look for yourself? Feel free to check out [this Mondrian animated with CSS keyframes](https://codepen.io/aholachek/pen/poOeXBM) and compare it with  [the same UI animated with animate-css-grid.](https://codepen.io/aholachek/pen/XWPMwEx)
 
 ## How to use it
 
