@@ -1,7 +1,11 @@
 {
   "name": "animate-css-grid",
   "version": "1.4.3",
-  "description": "Easy, smooth transitions for CSS grid",
+  "source": "src/index.ts",
+  "main": "dist/main.js",
+  "module": "dist/main.module.js",
+  "types": "dist/index.d.ts",
+  "description": "Smooth, easy transitions for CSS grid",
   "homepage": "https://github.com/aholachek/animate-css-grid",
   "keywords": [
     "css",
@@ -11,13 +15,11 @@
     "mutation-observer",
     "layout"
   ],
-  "types": "dist/index.d.ts",
-  "main": "dist/main.js",
   "sideEffects": false,
   "scripts": {
+    "watch": "parcel serve ./demo",
+    "build": "parcel build ./src/index.ts",
     "prepublishOnly": "yarn run build",
-    "build": "webpack --mode production",
-    "dev": "./node_modules/.bin/webpack-dev-server --mode development --config demo/webpack.config.js",
     "check-types": "tsc",
     "preversion": "npm run check-types"
   },
@@ -29,20 +31,19 @@
   },
   "bugs": "https://github.com/aholachek/animate-css-grid/issues",
   "devDependencies": {
-    "@babel/core": "^7.7.5",
-    "@babel/preset-env": "^7.7.6",
-    "@babel/preset-typescript": "^7.7.4",
-    "babel-loader": "^8.0.6",
-    "npm-run-all": "^4.1.5",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.3",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
+    "@parcel/packager-ts": "2.8.3",
+    "@parcel/transformer-typescript-types": "^2.8.3",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
+    "eslint": "^8.35.0",
+    "parcel": "^2.8.3",
+    "typescript": "4.9.5"
   },
   "dependencies": {
     "@popmotion/easing": "^1.0.2",
+    "@types/lodash.throttle": "^4.1.7",
+    "framesync": "^6.1.2",
     "lodash.throttle": "^4.1.1",
-    "popmotion": "^8.5.5"
+    "popmotion": "^8.7.6"
   }
 }

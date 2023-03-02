@@ -1,4 +1,4 @@
-import { wrapGrid } from '../src/index.ts';
+import { wrapGrid } from '../dist/main';
 
 const grid = document.querySelector('.grid');
 
@@ -49,10 +49,10 @@ console.log('unwrapped');
 const { unwrapGrid } = wrapGrid(grid, {
   easing: 'backOut',
   onStart: els =>
-  els.forEach(el => {
-    console.log('onstart');
-    el.classList.add('big');
-  }),
+    els.forEach(el => {
+      console.log('onstart');
+      el.classList.add('big');
+    }),
   onEnd: els => {
     els.forEach(el => el.classList.add('small'));
     console.log('onend');

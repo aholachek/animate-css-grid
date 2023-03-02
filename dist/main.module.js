@@ -1,38 +1,30 @@
-var $8zHUo$popmotioneasing = require("@popmotion/easing");
-var $8zHUo$framesync = require("framesync");
-var $8zHUo$lodashthrottle = require("lodash.throttle");
-var $8zHUo$popmotion = require("popmotion");
+import {anticipate as $hgUW1$anticipate, backIn as $hgUW1$backIn, backInOut as $hgUW1$backInOut, backOut as $hgUW1$backOut, circIn as $hgUW1$circIn, circInOut as $hgUW1$circInOut, circOut as $hgUW1$circOut, easeIn as $hgUW1$easeIn, easeInOut as $hgUW1$easeInOut, easeOut as $hgUW1$easeOut, linear as $hgUW1$linear} from "@popmotion/easing";
+import $hgUW1$framesync from "framesync";
+import $hgUW1$lodashthrottle from "lodash.throttle";
+import {tween as $hgUW1$tween} from "popmotion";
 
-function $parcel$interopDefault(a) {
-  return a && a.__esModule ? a.default : a;
-}
-function $parcel$export(e, n, v, s) {
-  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
-}
-
-$parcel$export(module.exports, "wrapGrid", () => $882b6d93070905b3$export$cfa74da6327324bf);
 /* eslint-disable @typescript-eslint/no-empty-function */ 
 
 
 
-const $882b6d93070905b3$var$popmotionEasing = {
-    anticipate: $8zHUo$popmotioneasing.anticipate,
-    backIn: $8zHUo$popmotioneasing.backIn,
-    backInOut: $8zHUo$popmotioneasing.backInOut,
-    backOut: $8zHUo$popmotioneasing.backOut,
-    circIn: $8zHUo$popmotioneasing.circIn,
-    circInOut: $8zHUo$popmotioneasing.circInOut,
-    circOut: $8zHUo$popmotioneasing.circOut,
-    easeIn: $8zHUo$popmotioneasing.easeIn,
-    easeInOut: $8zHUo$popmotioneasing.easeInOut,
-    easeOut: $8zHUo$popmotioneasing.easeOut,
-    linear: $8zHUo$popmotioneasing.linear
+const $149c1bd638913645$var$popmotionEasing = {
+    anticipate: $hgUW1$anticipate,
+    backIn: $hgUW1$backIn,
+    backInOut: $hgUW1$backInOut,
+    backOut: $hgUW1$backOut,
+    circIn: $hgUW1$circIn,
+    circInOut: $hgUW1$circInOut,
+    circOut: $hgUW1$circOut,
+    easeIn: $hgUW1$easeIn,
+    easeInOut: $hgUW1$easeInOut,
+    easeOut: $hgUW1$easeOut,
+    linear: $hgUW1$linear
 };
-const $882b6d93070905b3$var$DATASET_KEY = "animateGridId";
+const $149c1bd638913645$var$DATASET_KEY = "animateGridId";
 // in order to account for scroll, (which we're not listening for)
 // always cache the item's position relative
 // to the top and left of the grid container
-const $882b6d93070905b3$var$getGridAwareBoundingClientRect = (gridBoundingClientRect, el)=>{
+const $149c1bd638913645$var$getGridAwareBoundingClientRect = (gridBoundingClientRect, el)=>{
     const { top: top , left: left , width: width , height: height  } = el.getBoundingClientRect();
     const rect = {
         top: top,
@@ -51,24 +43,24 @@ const $882b6d93070905b3$var$getGridAwareBoundingClientRect = (gridBoundingClient
     return rect;
 };
 // the function used during the tweening
-const $882b6d93070905b3$var$applyCoordTransform = (el, { translateX: translateX , translateY: translateY , scaleX: scaleX , scaleY: scaleY  }, { immediate: immediate  } = {})=>{
+const $149c1bd638913645$var$applyCoordTransform = (el, { translateX: translateX , translateY: translateY , scaleX: scaleX , scaleY: scaleY  }, { immediate: immediate  } = {})=>{
     const isFinished = translateX === 0 && translateY === 0 && scaleX === 1 && scaleY === 1;
     const styleEl = ()=>{
         el.style.transform = isFinished ? "" : `translateX(${translateX}px) translateY(${translateY}px) scaleX(${scaleX}) scaleY(${scaleY})`;
     };
     if (immediate) styleEl();
-    else (0, ($parcel$interopDefault($8zHUo$framesync))).render(styleEl);
+    else (0, $hgUW1$framesync).render(styleEl);
     const firstChild = el.children[0];
     if (firstChild) {
         const styleChild = ()=>{
             firstChild.style.transform = isFinished ? "" : `scaleX(${1 / scaleX}) scaleY(${1 / scaleY})`;
         };
         if (immediate) styleChild();
-        else (0, ($parcel$interopDefault($8zHUo$framesync))).render(styleChild);
+        else (0, $hgUW1$framesync).render(styleChild);
     }
 };
-const $882b6d93070905b3$export$cfa74da6327324bf = (container, { duration: duration = 250 , stagger: stagger = 0 , easing: easing = "easeInOut" , onStart: onStart = ()=>{} , onEnd: onEnd = ()=>{}  } = {})=>{
-    if (!$882b6d93070905b3$var$popmotionEasing[easing]) throw new Error(`${easing} is not a valid easing name`);
+const $149c1bd638913645$export$cfa74da6327324bf = (container, { duration: duration = 250 , stagger: stagger = 0 , easing: easing = "easeInOut" , onStart: onStart = ()=>{} , onEnd: onEnd = ()=>{}  } = {})=>{
+    if (!$149c1bd638913645$var$popmotionEasing[easing]) throw new Error(`${easing} is not a valid easing name`);
     let mutationsDisabled = false;
     const disableMutationsWhileFunctionRuns = (func)=>{
         mutationsDisabled = true;
@@ -84,26 +76,26 @@ const $882b6d93070905b3$export$cfa74da6327324bf = (container, { duration: durati
         const gridBoundingClientRect = container.getBoundingClientRect();
         Array.from(elements).forEach((el)=>{
             if (typeof el.getBoundingClientRect !== "function") return;
-            if (!el.dataset[$882b6d93070905b3$var$DATASET_KEY]) {
+            if (!el.dataset[$149c1bd638913645$var$DATASET_KEY]) {
                 const newId = `${Math.random()}`;
-                el.dataset[$882b6d93070905b3$var$DATASET_KEY] = newId;
+                el.dataset[$149c1bd638913645$var$DATASET_KEY] = newId;
             }
-            const animateGridId = el.dataset[$882b6d93070905b3$var$DATASET_KEY];
+            const animateGridId = el.dataset[$149c1bd638913645$var$DATASET_KEY];
             if (!cachedPositionData[animateGridId]) cachedPositionData[animateGridId] = {};
-            const rect = $882b6d93070905b3$var$getGridAwareBoundingClientRect(gridBoundingClientRect, el);
+            const rect = $149c1bd638913645$var$getGridAwareBoundingClientRect(gridBoundingClientRect, el);
             cachedPositionData[animateGridId].rect = rect;
             cachedPositionData[animateGridId].gridBoundingClientRect = gridBoundingClientRect;
         });
     };
     recordPositions(container.children);
-    const throttledResizeListener = (0, ($parcel$interopDefault($8zHUo$lodashthrottle)))(()=>{
+    const throttledResizeListener = (0, $hgUW1$lodashthrottle)(()=>{
         const bodyElement = document.querySelector("body");
         const containerIsNoLongerInPage = bodyElement && !bodyElement.contains(container);
         if (!container || containerIsNoLongerInPage) window.removeEventListener("resize", throttledResizeListener);
         recordPositions(container.children);
     }, 250);
     window.addEventListener("resize", throttledResizeListener);
-    const throttledScrollListener = (0, ($parcel$interopDefault($8zHUo$lodashthrottle)))(()=>{
+    const throttledScrollListener = (0, $hgUW1$lodashthrottle)(()=>{
         recordPositions(container.children);
     }, 20);
     container.addEventListener("scroll", throttledScrollListener);
@@ -118,7 +110,7 @@ const $882b6d93070905b3$export$cfa74da6327324bf = (container, { duration: durati
         const childrenElements = Array.from(container.children);
         // stop current transitions and remove transforms on transitioning elements
         childrenElements.filter((el)=>{
-            const itemPosition = cachedPositionData[el.dataset[$882b6d93070905b3$var$DATASET_KEY]];
+            const itemPosition = cachedPositionData[el.dataset[$149c1bd638913645$var$DATASET_KEY]];
             if (itemPosition && itemPosition.stopTween) {
                 itemPosition.stopTween();
                 delete itemPosition.stopTween;
@@ -132,9 +124,9 @@ const $882b6d93070905b3$export$cfa74da6327324bf = (container, { duration: durati
         const animatedGridChildren = childrenElements.map((el)=>({
                 childCoords: {},
                 el: el,
-                boundingClientRect: $882b6d93070905b3$var$getGridAwareBoundingClientRect(gridBoundingClientRect, el)
+                boundingClientRect: $149c1bd638913645$var$getGridAwareBoundingClientRect(gridBoundingClientRect, el)
             })).filter(({ el: el , boundingClientRect: boundingClientRect  })=>{
-            const itemPosition = cachedPositionData[el.dataset[$882b6d93070905b3$var$DATASET_KEY]];
+            const itemPosition = cachedPositionData[el.dataset[$149c1bd638913645$var$DATASET_KEY]];
             // don't animate the initial appearance of elements,
             // just cache their position so they can be animated later
             if (!itemPosition) {
@@ -158,11 +150,11 @@ const $882b6d93070905b3$export$cfa74da6327324bf = (container, { duration: durati
         .map((data)=>{
             const firstChild = data.el.children[0];
             // different transform origins give different effects. "50% 50%" is default
-            if (firstChild) data.childCoords = $882b6d93070905b3$var$getGridAwareBoundingClientRect(gridBoundingClientRect, firstChild);
+            if (firstChild) data.childCoords = $149c1bd638913645$var$getGridAwareBoundingClientRect(gridBoundingClientRect, firstChild);
             return data;
         }).forEach(({ el: el , boundingClientRect: { top: top , left: left , width: width , height: height  } , childCoords: { top: childTop , left: childLeft  }  }, i)=>{
             const firstChild = el.children[0];
-            const itemPosition = cachedPositionData[el.dataset[$882b6d93070905b3$var$DATASET_KEY]];
+            const itemPosition = cachedPositionData[el.dataset[$149c1bd638913645$var$DATASET_KEY]];
             const coords = {
                 scaleX: itemPosition.rect.width / width,
                 scaleY: itemPosition.rect.height / height,
@@ -176,12 +168,12 @@ const $882b6d93070905b3$export$cfa74da6327324bf = (container, { duration: durati
                 cachedResolve = resolve;
             });
             completionPromises.push(completionPromise);
-            $882b6d93070905b3$var$applyCoordTransform(el, coords, {
+            $149c1bd638913645$var$applyCoordTransform(el, coords, {
                 immediate: true
             });
             // now start the animation
             const startAnimation = ()=>{
-                const { stop: stop  } = (0, $8zHUo$popmotion.tween)({
+                const { stop: stop  } = (0, $hgUW1$tween)({
                     from: coords,
                     to: {
                         translateX: 0,
@@ -190,12 +182,12 @@ const $882b6d93070905b3$export$cfa74da6327324bf = (container, { duration: durati
                         scaleY: 1
                     },
                     duration: duration,
-                    ease: $882b6d93070905b3$var$popmotionEasing[easing]
+                    ease: $149c1bd638913645$var$popmotionEasing[easing]
                 }).start({
                     update: (transforms)=>{
-                        $882b6d93070905b3$var$applyCoordTransform(el, transforms);
+                        $149c1bd638913645$var$applyCoordTransform(el, transforms);
                         // this helps prevent layout thrashing
-                        (0, ($parcel$interopDefault($8zHUo$framesync))).postRender(()=>recordPositions([
+                        (0, $hgUW1$framesync).postRender(()=>recordPositions([
                                 el
                             ]));
                     },
@@ -206,7 +198,7 @@ const $882b6d93070905b3$export$cfa74da6327324bf = (container, { duration: durati
             if (typeof stagger !== "number") startAnimation();
             else {
                 const timeoutId = setTimeout(()=>{
-                    (0, ($parcel$interopDefault($8zHUo$framesync))).update(startAnimation);
+                    (0, $hgUW1$framesync).update(startAnimation);
                 }, stagger * i);
                 itemPosition.stopTween = ()=>clearTimeout(timeoutId);
             }
@@ -237,4 +229,5 @@ const $882b6d93070905b3$export$cfa74da6327324bf = (container, { duration: durati
 };
 
 
-//# sourceMappingURL=main.js.map
+export {$149c1bd638913645$export$cfa74da6327324bf as wrapGrid};
+//# sourceMappingURL=main.module.js.map
