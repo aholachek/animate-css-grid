@@ -22,12 +22,12 @@ Performantly animate all CSS grid properties, including:
 </a>
 
 
-- #### [Fork Photo Grid Example on CodeSandbox](https://codesandbox.io/s/animate-css-grid-template-t6qsf)
+#### [Fork Photo Grid Example on CodeSandbox](https://codesandbox.io/s/animate-css-grid-template-t6qsf)
 
 
 ### Why use animate-css-grid?
 
-This library uses hardware accelerated transforms to transition between different layout states, which means, in comparison to pure CSS grid animations, it offers:
+This library uses transforms to transition between different layout states, which means, in comparison to pure [CSS grid animations](https://web.dev/css-animated-grid-layouts/), it offers:
 
 - better performance 
 - more flexibility in terms of what properties can be animated
@@ -40,7 +40,6 @@ Want to have a look for yourself? Feel free to check out [this Mondrian animated
 Just call the `wrapGrid` method on your grid container, and optionally provide a config object as a second argument.
 If the grid is removed from the page, the animations will automatically be cleaned up as well.
 
-ES6 Module:
 
 `yarn add animate-css-grid` or `npm install animate-css-grid`
 
