@@ -10,6 +10,13 @@
   "files": [
     "/dist"
   ],
+  "type":"module",
+  "exports": {
+    ".": {
+      "import": "./dist/main.module.js",
+      "require": "./dist/main.js"
+    }
+  },
   "keywords": [
     "css",
     "grid",
